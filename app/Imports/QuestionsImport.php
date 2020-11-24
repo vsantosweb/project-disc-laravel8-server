@@ -23,6 +23,10 @@ class QuestionsImport implements ToCollection
             ]);
         }
 
+        foreach($discQuestion->all() as $question){
+            $question->uuid = Str::uuid();
+            $question->save();
+        }
 
         foreach ($rows as $row) {
 

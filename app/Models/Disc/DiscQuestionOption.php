@@ -10,6 +10,7 @@ class DiscQuestionOption extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'disc_question_id', 'description', 'less', 'more'];
+    protected $hidden = ['updated_at', 'created_at'];
 
     public function question()
     {

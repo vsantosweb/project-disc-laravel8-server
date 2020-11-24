@@ -14,6 +14,40 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('v1')->namespace('Api\v1')->group(function () {
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | BackOffice Routes
+    |--------------------------------------------------------------------------
+    */
+
+    Route::namespace('Backoffice')->group(function () {
+
+        Route::prefix('disc')->namespace('Disc')->group(function () {
+
+            Route::get('questions', 'DiscQuestionsController@index');
+        });
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Client Routes
+    |--------------------------------------------------------------------------
+    */
+
+    Route::namespace('Client')->group(function () {
+
+        Route::prefix('disc')->namespace('Disc')->group(function () {
+
+            Route::prefix('questions')->group(function(){
+
+                Route::get('/', 'DiscQuestionsController@index');
+                Route::get('/{uuid}', 'DiscQuestionsController@show');
+
+            });
+
+        });
+    });
 });
