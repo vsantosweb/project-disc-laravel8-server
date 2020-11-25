@@ -11,4 +11,9 @@ class Disc extends Model
 
     protected $table = 'disc';
     protected $fillable = ['name', 'letter'];
+
+    public function intensities()
+    {
+        return $this->hasMany(DiscIntensity::class);
+    }
 }

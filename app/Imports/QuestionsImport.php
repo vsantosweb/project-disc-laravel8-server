@@ -34,8 +34,8 @@ class QuestionsImport implements ToCollection
                 'disc_question_id' => $row[0],
                 'name' => $row[1],
                 'description' => $row[2],
-                'less' => $row[3],
-                'more' => $row[4]
+                'more' => $row[3],
+                'less' => $row[4]
             ]);
         }
     }

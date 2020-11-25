@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class DiscTableSeeder extends Seeder
+class DiscSeeder extends Seeder
 {
     /**
      * Run the database seeds.

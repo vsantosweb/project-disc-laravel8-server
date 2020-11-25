@@ -14,7 +14,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            DiscTableSeeder::class,
+            DiscSeeder::class,
+            DiscSeeder::class,
+            DiscSessionSeeder::class
         ]);
     }
 }

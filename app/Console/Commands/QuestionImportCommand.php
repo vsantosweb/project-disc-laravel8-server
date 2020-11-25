@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Imports\DiscIntensitiesImport;
 use App\Imports\QuestionsImport;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
@@ -13,7 +14,7 @@ class QuestionImportCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'import:questions';
+    protected $signature = 'import:excel';
 
     /**
      * The console command description.
@@ -39,7 +40,9 @@ class QuestionImportCommand extends Command
      */
     public function handle()
     {
-        Excel::import(new QuestionsImport, public_path().DIRECTORY_SEPARATOR.'teste2.xlsx');
+        // Excel::import(new QuestionsImport, public_path().DIRECTORY_SEPARATOR.'planilhas'.DIRECTORY_SEPARATOR.'questions.xlsx');
+        Excel::import(new DiscIntensitiesImport, public_path().DIRECTORY_SEPARATOR.'planilhas'.DIRECTORY_SEPARATOR.'disc_intensities.xlsx');
+
         return 0;
     }
 }
