@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1\Backoffice\Disc;
 use App\Http\Controllers\Controller;
 use App\Models\Disc\Disc;
 use App\Models\Disc\DiscQuestion;
+use App\Models\Disc\DiscSession;
 use Illuminate\Http\Request;
 
 class DiscController extends Controller
@@ -13,11 +14,13 @@ class DiscController extends Controller
     public function __construct
     (
         Disc $disc,
-        DiscQuestion $discQuestion
+        DiscQuestion $discQuestion,
+        DiscSession $discSession
     )
     {
         $this->disc = $disc;
         $this->discQuestion = $discQuestion;
+        $this->discSession = $discSession;
     }
 
     /**

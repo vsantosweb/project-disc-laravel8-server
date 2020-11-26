@@ -16,7 +16,13 @@ class DatabaseSeeder extends Seeder
         $this->call([
             DiscSeeder::class,
             DiscSeeder::class,
-            DiscSessionSeeder::class
+            DiscSessionSeeder::class,
+            DiscGraphTypeSeeder::class,
+            DiscGraphConfigSeeder::class,
+            CustomerSeeder::class
+            // DiscProfileSeeder::class,
+            // DiscCategorySeeder::class
+
         ]);
     }
 }

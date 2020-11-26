@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSegmentRangesTable extends Migration
+class CreateDiscCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateSegmentRangesTable extends Migration
      */
     public function up()
     {
-        Schema::create('segment_ranges', function (Blueprint $table) {
+        Schema::create('disc_categories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('segment_id');
-            $table->unsignedBigInteger('disc_id');
+            $table->string('name')->nullable();
+            $table->string('slug');
             $table->timestamps();
+
+
+
         });
     }
 
@@ -28,6 +31,6 @@ class CreateSegmentRangesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('segment_ranges');
+        Schema::dropIfExists('disc_categories');
     }
 }

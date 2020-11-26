@@ -24,7 +24,7 @@ class DiscGraphFactory extends Factory
     {
         return [
             'uuid' => Str::uuid(),
-            'graphs' => str_replace(array("\r", "\n", " "), "", '{
+            'graphs' => json_decode(str_replace(array("\r", "\n", " "), "", '{
                 "graphs": [{
                         "graphName": "less",
                         "graphLetters": {
@@ -53,7 +53,7 @@ class DiscGraphFactory extends Factory
                         }
                     }
                 ]
-            }')
+            }'))
         ];
     }
 }

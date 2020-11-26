@@ -1,0 +1,31 @@
+{
+    "customerName": null,
+    "docName": "Encantador Dominante e Influente",
+    "title": "Encantador: Dominante e Influente",
+    "subTitle": "O seu estilo DISC é: DI",
+    "descriptionParagraphs": [
+        "você é ativo e tem metas ambiciosas. Mantém o andamento dos processos acelerado e pode ser",
+        "Você gosta de liberdade para traçar seu caminho. Você pode ser bastante",
+        "Gosta de assumir responsabilidades e tende a aproveitar as oportunidades para"
+    ],
+    "profileTitle": "PERFIL DE ENCANTADOR",
+    "ProfiledescriptionParagraphs": [
+        "você é ativo e tem metas ambiciosas. Mantém o andamento dos processos acelerado e pode ser",
+        "Você gosta de liberdade para traçar seu caminho. Você pode ser bastante",
+        "Gosta de assumir responsabilidades e tende a aproveitar as oportunidades para"
+    ],
+    "profileTopcs": [
+        "Emoções: permite ataque, minimiza a carência",
+        "Propósito: controlar seu meio e seu público-alvo"
+    ],
+    "prioritiesAndWorks": [{
+            "title": "Agir",
+            "description": "por querer que as coisas aconteçam de forma rápida, você coloca"
+        },
+        {
+            "title": "Resultados",
+            "description": "Você é ambicioso e focado no sucesso. Tem padrões elevados e não se contenta com pouco. "
+        }
+    ]
+
+}
