@@ -19,7 +19,9 @@ class DatabaseSeeder extends Seeder
             DiscSessionSeeder::class,
             DiscGraphTypeSeeder::class,
             DiscGraphConfigSeeder::class,
-            CustomerSeeder::class
+            CustomerSeeder::class,
+            DiscSegmentSeeder::class,
+            DiscRangeSeeder::class
             // DiscProfileSeeder::class,
             // DiscCategorySeeder::class
 

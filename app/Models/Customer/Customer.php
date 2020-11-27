@@ -5,7 +5,11 @@ namespace App\Models\Customer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Support\Str;
+
 
 class Customer extends Authenticatable implements JWTSubject
 {
@@ -64,5 +68,19 @@ class Customer extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+    /**
+     * Cria uma sessão temporária baseada no email e um token aleatório.
+     *
+     * @return array
+     */
+    public function sessionHash()
+    {
+        $session = CustomerDiscSession::create([
+            'email' => $this->email,
+            'token' => Str::random(100)
+        ]);
+
+        return $session->token;
     }
 }

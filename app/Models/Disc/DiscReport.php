@@ -11,5 +11,5 @@ class DiscReport extends Model
 
     protected $fillable = ['name','metadata', 'disc_profile_id', 'disc_category_id', 'slug', 'code'];
     protected $hidden = ['updated_at', 'created_at'];
-    protected $casts = ['metadata' => 'Object'];
+    protected $casts = ['metadata' => 'object'];
 }

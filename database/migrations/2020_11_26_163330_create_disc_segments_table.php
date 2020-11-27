@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCustomerSessionsTable extends Migration
+class CreateDiscSegmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateCustomerSessionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('customer_sessions', function (Blueprint $table) {
-            $table->id();
-            $table->string('token');
-            $table->string('email');
+        Schema::create('disc_segments', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->tinyInteger('number');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateCustomerSessionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customer_sessions');
+        Schema::dropIfExists('disc_segments');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\Disc\DiscCategory;
 use App\Models\Disc\DiscCombination;
 use App\Models\Disc\DiscProfile;
+use App\Models\Disc\DiscRanges;
 use App\Models\Disc\DiscReport;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -18,9 +19,7 @@ class DiscProfilesImport implements ToCollection
     public function collection(Collection $rows)
     {
 
-
         foreach ($rows as $row => $value) {
-
             $discProfiles = $rows[$row][4];
             $discCategory = $rows[$row][5];
 
@@ -53,14 +52,15 @@ class DiscProfilesImport implements ToCollection
                 $report = json_decode(file_get_contents($relatoryFile), true);
 
                 DiscReport::firstOrCreate(
-                ['name' => $profile->name . ' ' .  $category->name],
-                [
-                    'code' => $value[0] . $value[1] . $value[2] . $value[3],
-                    'slug' => $slugName,
-                    'disc_profile_id' => $profile->id,
-                    'disc_category_id' => $category->id,
-                    'metadata' => $report
-                ]);
+                    ['name' => $profile->name . ' ' .  $category->name],
+                    [
+                        'code' => $value[0] . $value[1] . $value[2] . $value[3],
+                        'slug' => $slugName,
+                        'disc_profile_id' => $profile->id,
+                        'disc_category_id' => $category->id,
+                        'metadata' => $report
+                    ]
+                );
             }
         }
     }

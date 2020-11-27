@@ -14,6 +14,8 @@ class DiscGraphConfigSeeder extends Seeder
      */
     public function run()
     {
+
+
         DB::table('disc_graph_config')->insert([
 
             ['name' => 'Segmento 1', 'disc_graph_type_id' => 1, 'number' => 1, 'min_range' => -25, 'max_range' => -10, 'min_intensity' => 2, 'max_intensity' => 3],

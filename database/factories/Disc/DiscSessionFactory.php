@@ -26,6 +26,7 @@ class DiscSessionFactory extends Factory
             'uuid' => Str::uuid(),
             'expire_at' => now()->addMinutes(15),
             'has_expired' => 0,
+            'has_finished'=>0,
             'active' => 1,
         ];
     }

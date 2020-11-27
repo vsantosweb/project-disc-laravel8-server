@@ -17,6 +17,7 @@ class CreateDiscSessionsTable extends Migration
             $table->id();
             $table->uuid('uuid');
             $table->dateTime('expire_at')->nullable();
+            $table->tinyInteger('has_finished')->default(0)->comment('0 false | 1 true');
             $table->tinyInteger('has_expired')->default(0)->comment('0 false | 1 true');
             $table->tinyInteger('active')->default(0)->comment('0 false | 1 true');
             $table->timestamps();
