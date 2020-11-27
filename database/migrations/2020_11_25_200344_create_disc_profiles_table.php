@@ -17,6 +17,7 @@ class CreateDiscProfilesTable extends Migration
             $table->id();
             // $table->uuid('uuid')->unique();
             $table->string('name');
+            $table->string('slug');
             $table->timestamps();
         });
     }
