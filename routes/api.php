@@ -43,7 +43,7 @@ Route::prefix('v1')->namespace('Api\v1')->group(function () {
 
             Route::prefix('session')->group(function () {
                 Route::post('/start', 'DiscSessionController@start');
-                Route::post('/finish', 'DiscSessionController@finish');
+                Route::get('/finish', 'DiscSessionController@finish');
             });
 
             Route::prefix('questions')->group(function () {

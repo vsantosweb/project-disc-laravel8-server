@@ -72,7 +72,7 @@ class DiscSessionController extends DiscController
     {
 
 
-        foreach ($request->graphDiff as $letter => $result) {
+        foreach ($request->all() as $letter => $result) {
 
             foreach (DiscRanges::all() as $discRanges) {
                 if ($letter == $discRanges->disc->letter) {
@@ -84,8 +84,10 @@ class DiscSessionController extends DiscController
             }
         }
         if(count($profile) < 4){
+
             return 'Combinação inválida';
         }
-        return DiscCombination::where('code', $profile[0] . $profile[1] . $profile[2] . $profile[3])->with('profile', 'category')->first();
+
+        return $this->outputJSON(DiscCombination::where('code', $profile[0] . $profile[1] . $profile[2] . $profile[3])->with('profile', 'category')->first(), '', false);
     }
 }
