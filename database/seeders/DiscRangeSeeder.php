@@ -25,8 +25,7 @@ class DiscRangeSeeder extends Seeder
 
             ['disc_id' => 1, 'range' => str_replace(["\n", "\r", " "], "", '[
                 {"intensity":24, "range": ' . json_encode(range(8, 7)) . '},
-                {"intensity":24, "range": ' . json_encode(range(6, 8)) . '},
-                {"intensity":23, "range": ' . json_encode(range(6, 8)) . '},
+                {"intensity":23, "range": ' . json_encode(range(6, 6)) . '},
                 {"intensity":21, "range": ' . json_encode(range(5, 5)) . '}
             ]'), 'segment_id' => 6],
 
