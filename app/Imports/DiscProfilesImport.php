@@ -27,7 +27,7 @@ class DiscProfilesImport implements ToCollection
 
                 $profile = DiscProfile::firstOrCreate([
                     'name' => $discProfiles,
-                    'slug' => Str::slug($discCategory)
+                    'slug' => Str::slug($discProfiles)
                 ]);
             }
 

@@ -9,8 +9,9 @@ class DiscProfile extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'uuid', 'slug'];
+    protected $fillable = ['name', 'uuid', 'slug', 'description'];
     protected $hidden = ['updated_at', 'created_at'];
+    protected $casts = ['description' => 'object'];
 
     public function combinations()
     {

@@ -14,12 +14,14 @@ class DiscRanges extends Model
         'range',
         'segment_id',
     ];
-    protected $casts = ['object'];
+    protected $casts = ['range' => 'object'];
 
-    public function disc(){
+    public function disc()
+    {
         return $this->belongsTo(Disc::class);
     }
-    public function segment(){
+    public function segment()
+    {
         return $this->belongsTo(DiscSegment::class);
     }
 }

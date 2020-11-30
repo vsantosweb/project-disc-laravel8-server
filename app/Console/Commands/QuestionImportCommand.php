@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Imports\DiscIntensitiesImport;
 use App\Imports\DiscProfilesImport;
+use App\Imports\ProfileDescriptionImport;
 use App\Imports\QuestionsImport;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
@@ -41,13 +42,11 @@ class QuestionImportCommand extends Command
      */
     public function handle()
     {
-        Excel::import(new DiscProfilesImport, public_path().DIRECTORY_SEPARATOR.'planilhas'.DIRECTORY_SEPARATOR.'testeprofile.xlsx');
-        Excel::import(new QuestionsImport, public_path().DIRECTORY_SEPARATOR.'planilhas'.DIRECTORY_SEPARATOR.'questions.xlsx');
-        Excel::import(new DiscIntensitiesImport, public_path().DIRECTORY_SEPARATOR.'planilhas'.DIRECTORY_SEPARATOR.'disc_intensities.xlsx');
+        Excel::import(new DiscProfilesImport, public_path() . DIRECTORY_SEPARATOR . 'planilhas' . DIRECTORY_SEPARATOR . 'testeprofile.xlsx');
+        Excel::import(new QuestionsImport, public_path() . DIRECTORY_SEPARATOR . 'planilhas' . DIRECTORY_SEPARATOR . 'questions.xlsx');
+        Excel::import(new DiscIntensitiesImport, public_path() . DIRECTORY_SEPARATOR . 'planilhas' . DIRECTORY_SEPARATOR . 'disc_intensities.xlsx');
+        Excel::import(new ProfileDescriptionImport, public_path() . DIRECTORY_SEPARATOR . 'planilhas' . DIRECTORY_SEPARATOR . 'profile_descricao.xlsx');
 
         return 0;
     }
 }
-
-
-
