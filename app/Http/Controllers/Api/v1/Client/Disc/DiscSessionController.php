@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Api\v1\Client\Disc;
 
 use App\Http\Controllers\Controller;
-use App\Models\Customer\Customer;
-use App\Models\Customer\CustomerDiscSession;
 use App\Models\Disc\DiscCombination;
 use App\Models\Disc\DiscProfile;
 use App\Models\Disc\DiscRanges;
@@ -15,7 +13,6 @@ class DiscSessionController extends DiscController
 {
     public function start(Request $request)
     {
-        $sesion =  new CustomerDiscSession();
 
         // return $sesion->createToken(Customer::find(1));
 
@@ -68,8 +65,9 @@ class DiscSessionController extends DiscController
 
         $graphLess = $request->graphs['items'][0];
         $graphMore =  $request->graphs['items'][1];
+        $graphDiff = $request->graphs['items'][2];
 
-        foreach ($request->all() as $letter => $result) {
+        foreach ($graphDiff['graphLetters']as $letter => $result) {
 
             foreach (DiscRanges::all() as $discRanges) {
                 foreach ($discRanges->range as $rangeIntensity) {

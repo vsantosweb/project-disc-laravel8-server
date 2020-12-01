@@ -54,24 +54,24 @@ Route::prefix('v1')->namespace('Api\v1')->group(function () {
         });
 
 
-        /* Customer  Routes */
-        Route::prefix('customer')->namespace('Customer')->group(function () {
+        /* Respondent  Routes */
+        Route::prefix('respondent')->namespace('Respondent')->group(function () {
             Route::prefix('auth')->namespace('Auth')->group(function () {
                 Route::prefix('register')->group(function () {
-                    Route::post('/', 'CustomerRegisterController@register');
+                    Route::post('/', 'RespondentRegisterController@register');
                 });
-                Route::post('login', 'CustomerAuthController@login');
+                Route::post('login', 'RespondentAuthController@login');
 
-                Route::middleware('auth:customer,customer-token')->group(function () {
-                    Route::get('logged', 'CustomerAuthController@logged');
-                    Route::post('logout', 'CustomerAuthController@logout');
+                Route::middleware('auth:Respondent,Respondent-token')->group(function () {
+                    Route::get('logged', 'RespondentAuthController@logged');
+                    Route::post('logout', 'RespondentAuthController@logout');
                 });
             });
 
             Route::prefix('session')->group(function () {
-                Route::get('hash-login', 'CustomerDiscSessionController@hashLogged');
-                Route::post('shutdown', 'CustomerDiscSessionController@hashLogout');
-                Route::post('create', 'CustomerDiscSessionController@getToken');
+                Route::get('hash-login', 'RespondentDiscSessionController@hashLogged');
+                Route::post('shutdown', 'RespondentDiscSessionController@hashLogout');
+                Route::post('create', 'RespondentDiscSessionController@getToken');
             });
 
         });

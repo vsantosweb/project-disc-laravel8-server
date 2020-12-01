@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCustomerDiscSessionsTable extends Migration
+class CreateRespondentDiscSessionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateCustomerDiscSessionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('customer_disc_sessions', function (Blueprint $table) {
+        Schema::create('respondent_disc_sessions', function (Blueprint $table) {
             $table->id();
             $table->string('email', 100);
             $table->string('token', 100);
@@ -29,6 +29,6 @@ class CreateCustomerDiscSessionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customer_disc_sessions');
+        Schema::dropIfExists('respondent_disc_sessions');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Customer;
+namespace App\Models\Respondent;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,7 +11,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Support\Str;
 
 
-class Customer extends Authenticatable implements JWTSubject
+class Respondent extends Authenticatable implements JWTSubject
 {
     use Notifiable, HasFactory;
 
@@ -76,7 +76,7 @@ class Customer extends Authenticatable implements JWTSubject
      */
     public function sessionHash()
     {
-        $session = CustomerDiscSession::create([
+        $session = RespondentDiscSession::create([
             'email' => $this->email,
             'token' => Str::random(100)
         ]);
