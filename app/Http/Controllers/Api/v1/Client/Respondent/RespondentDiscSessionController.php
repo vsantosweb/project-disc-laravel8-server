@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1\Client\Respondent;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer\Customer;
 use App\Models\Respondent\Respondent;
 use App\Models\Respondent\RespondentDiscSession;
 use Illuminate\Http\Request;

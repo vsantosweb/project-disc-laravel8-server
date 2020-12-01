@@ -18,6 +18,7 @@ class CreateRespondentsTable extends Migration
             $table->uuid('uuid')->unique();
             $table->string('name');
             $table->string('email');
+            $table->text('custom_fields')->nullable();
 
             $table->timestamps();
         });

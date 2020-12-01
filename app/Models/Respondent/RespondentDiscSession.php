@@ -11,15 +11,15 @@ class RespondentDiscSession extends Authenticatable
     use HasFactory;
 
     protected $fillable = ['email', 'token'];
-
+    protected $hidden = ['updated_at', 'created_at', 'id', 'email'];
     public function createToken($respondent)
     {
         $token = $this->create([
             'token' => hash('sha256', Str::random(60)),
             'email' => $respondent->email
         ]);
-
-        return $this;
+        $token->uuid = $respondent->uuid;
+        return $token;
     }
 
     public function checkSessionToken($token, $uuid)
