@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Disc\DiscCombination;
 use App\Models\Disc\DiscProfile;
 use App\Models\Disc\DiscRanges;
+use App\Models\Respondent\Respondent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -62,12 +63,9 @@ class DiscSessionController extends DiscController
 
     public function finish(Request $request)
     {
-
-        $graphLess = $request->graphs['items'][0];
-        $graphMore =  $request->graphs['items'][1];
         $graphDiff = $request->graphs['items'][2];
 
-        foreach ($graphDiff['graphLetters']as $letter => $result) {
+        foreach ($graphDiff['graphLetters'] as $letter => $result) {
 
             foreach (DiscRanges::all() as $discRanges) {
                 foreach ($discRanges->range as $rangeIntensity) {
@@ -91,6 +89,13 @@ class DiscSessionController extends DiscController
         }
 
         $combination = DiscCombination::where('code', $profile[0] . $profile[1] . $profile[2] . $profile[3])->with('profile', 'category')->first();
+
+        if ($combination->disc_profile_id == 3 || $combination->disc_profile_id == 4 || $combination->disc_profile_id == 5) {
+            return $this->outputJSON('Desvio', '', true, 200);
+        }
+
+        $respondent = Respondent::where('uuid', $request->respondent_uuid)->firstOrFail();
+
         $combination->intensities = $intensities;
         return $this->outputJSON($combination, '', false);
     }

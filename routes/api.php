@@ -47,10 +47,10 @@ Route::prefix('v1')->namespace('Api\v1')->group(function () {
             });
 
             Route::prefix('questions')->group(function () {
-
                 Route::get('/', 'DiscQuestionsController@index');
                 Route::get('/{uuid}', 'DiscQuestionsController@show');
             });
+            Route::get('intensities', 'DiscController@intensities');
         });
 
 

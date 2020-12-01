@@ -19,7 +19,8 @@ class DiscIntensitiesImport implements ToCollection
             DiscIntensity::firstOrCreate([
                 'disc_id' => Disc::where('letter', $row[0])->first()->id,
                 'number' => $row[1],
-                'name' => $row[2]
+                'name' => $row[2],
+                'description' => $row[3]
             ]);
         }
     }

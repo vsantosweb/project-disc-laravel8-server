@@ -18,6 +18,7 @@ class CreateDiscIntensitiesTable extends Migration
             $table->unsignedBigInteger('disc_id');
             $table->integer('number');
             $table->string('name');
+            $table->text('description')->nullable();
             $table->timestamps();
 
             $table->foreign('disc_id')->references('id')->on('disc')->onDelete('cascade');

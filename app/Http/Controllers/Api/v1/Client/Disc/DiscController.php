@@ -17,4 +17,10 @@ class DiscController extends DiscDiscController
     {
         return $this->outputJSON($this->discQuestion->where('uuid', '$uuid')->with('options')->get(),'', false);
     }
+
+    public function intensities()
+    {
+        return $this->outputJSON( $this->discIntensities->with('disc')->get(),'', false);
+
+    }
 }

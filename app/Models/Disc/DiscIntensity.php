@@ -13,6 +13,7 @@ class DiscIntensity extends Model
         'disc_id',
         'number',
         'name',
+        'description'
     ];
 
     public function disc()
