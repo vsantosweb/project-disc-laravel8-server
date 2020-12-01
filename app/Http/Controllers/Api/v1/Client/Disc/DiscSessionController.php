@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 
 class DiscSessionController extends DiscController
 {
-    public function start()
+    public function start(Request $request)
     {
         $sesion =  new CustomerDiscSession();
 
@@ -65,6 +65,9 @@ class DiscSessionController extends DiscController
 
     public function finish(Request $request)
     {
+
+        $graphLess = $request->graphs['items'][0];
+        $graphMore =  $request->graphs['items'][1];
 
         foreach ($request->all() as $letter => $result) {
 

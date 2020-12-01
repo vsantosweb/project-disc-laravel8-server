@@ -43,7 +43,7 @@ Route::prefix('v1')->namespace('Api\v1')->group(function () {
 
             Route::prefix('session')->group(function () {
                 Route::post('/start', 'DiscSessionController@start');
-                Route::get('/finish', 'DiscSessionController@finish');
+                Route::post('/finish', 'DiscSessionController@finish');
             });
 
             Route::prefix('questions')->group(function () {
@@ -71,6 +71,7 @@ Route::prefix('v1')->namespace('Api\v1')->group(function () {
             Route::prefix('session')->group(function () {
                 Route::get('hash-login', 'CustomerDiscSessionController@hashLogged');
                 Route::post('shutdown', 'CustomerDiscSessionController@hashLogout');
+                Route::post('create', 'CustomerDiscSessionController@getToken');
             });
 
         });

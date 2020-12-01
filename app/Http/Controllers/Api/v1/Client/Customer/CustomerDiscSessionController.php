@@ -44,4 +44,11 @@ class CustomerDiscSessionController extends Controller
         }
         return $this->outputJSON('', 'Bad Request', true, 401);
     }
+
+    public function getToken()
+    {
+        $session = new CustomerDiscSession;
+
+       return $session->createToken(Customer::find(1));
+    }
 }
