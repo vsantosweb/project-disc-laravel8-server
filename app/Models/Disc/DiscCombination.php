@@ -19,6 +19,6 @@ class DiscCombination extends Model
 
     public function profile()
     {
-        return $this->belongsTo(DiscProfile::class, 'disc_profile_id')->with('report');
+        return $this->belongsTo(DiscProfile::class, 'disc_profile_id');
     }
 }

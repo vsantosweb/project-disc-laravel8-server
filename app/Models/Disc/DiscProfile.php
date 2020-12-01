@@ -18,8 +18,4 @@ class DiscProfile extends Model
         return $this->hasOne(DiscCombinations::class);
     }
 
-    public function report()
-    {
-        return $this->hasOne(DiscReport::class);
-    }
 }

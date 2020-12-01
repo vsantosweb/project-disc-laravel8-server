@@ -19,6 +19,6 @@ class DiscCategory extends Model
 
     public function report()
     {
-        return $this->hasMany(DiscReport::class);
+        return $this->hasMany(DiscCategoryReport::class);
     }
 }

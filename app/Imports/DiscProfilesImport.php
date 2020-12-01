@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Disc\DiscCategory;
+use App\Models\Disc\DiscCategoryReport;
 use App\Models\Disc\DiscCombination;
 use App\Models\Disc\DiscProfile;
 use App\Models\Disc\DiscRanges;
@@ -20,6 +21,7 @@ class DiscProfilesImport implements ToCollection
     {
 
         foreach ($rows as $row => $value) {
+
             $discProfiles = $rows[$row][4];
             $discCategory = $rows[$row][5];
 
@@ -44,24 +46,26 @@ class DiscProfilesImport implements ToCollection
                 'disc_category_id' => $category->id
             ]);
 
-            $slugName = Str::slug($profile->name . ' ' .  $category->name);
-            $relatoryFile = public_path() . DIRECTORY_SEPARATOR . 'relatorios' . DIRECTORY_SEPARATOR . $slugName . '.json';
+        }
 
-            if (file_exists($relatoryFile)) {
+        foreach($category->all() as $category){
 
-                $report = json_decode(file_get_contents($relatoryFile), true);
+            $categoryReportsFile = public_path() . DIRECTORY_SEPARATOR . 'relatorios' . DIRECTORY_SEPARATOR . 'categories'. DIRECTORY_SEPARATOR . $category->slug . '.json';
+                $test[] = $categoryReportsFile;
+            // if (file_exists($categoryReportsFile)) {
 
-                DiscReport::firstOrCreate(
-                    ['name' => $profile->name . ' ' .  $category->name],
+                $report = json_decode(file_get_contents($categoryReportsFile), true);
+
+                DiscCategoryReport::create(
                     [
-                        'code' => $value[0] . $value[1] . $value[2] . $value[3],
-                        'slug' => $slugName,
-                        'disc_profile_id' => $profile->id,
+                        'name' => $category->name,
+                        'slug' => $category->slug,
                         'disc_category_id' => $category->id,
                         'metadata' => $report
                     ]
                 );
-            }
+            // }
         }
+        print_r($test);
     }
 }

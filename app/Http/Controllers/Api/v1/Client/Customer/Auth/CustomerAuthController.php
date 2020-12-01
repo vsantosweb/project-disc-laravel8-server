@@ -36,7 +36,7 @@ class CustomerAuthController extends Controller
     }
     public function logged()
     {
-        return $this->outputJSON(auth()->guard('customer')->user()->with('address')->first(),'', false, 200);
+        return $this->outputJSON(auth()->user(),'', false, 200);
     }
 
 }

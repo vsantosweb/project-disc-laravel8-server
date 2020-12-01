@@ -62,17 +62,17 @@ Route::prefix('v1')->namespace('Api\v1')->group(function () {
                 });
                 Route::post('login', 'CustomerAuthController@login');
 
-                Route::middleware('auth:customer')->group(function () {
+                Route::middleware('auth:customer,customer-token')->group(function () {
                     Route::get('logged', 'CustomerAuthController@logged');
                     Route::post('logout', 'CustomerAuthController@logout');
                 });
             });
 
             Route::prefix('session')->group(function () {
-                Route::get('hash-login', 'CustomerDiscSessionController@checkSessionHash');
+                Route::get('hash-login', 'CustomerDiscSessionController@hashLogged');
+                Route::post('shutdown', 'CustomerDiscSessionController@hashLogout');
             });
-            Route::middleware('auth:customer')->group(function () {
-            });
+
         });
     });
 });

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\v1\Client\Disc;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer\Customer;
+use App\Models\Customer\CustomerDiscSession;
 use App\Models\Disc\DiscCombination;
 use App\Models\Disc\DiscProfile;
 use App\Models\Disc\DiscRanges;
@@ -13,6 +15,10 @@ class DiscSessionController extends DiscController
 {
     public function start()
     {
+        $sesion =  new CustomerDiscSession();
+
+        return $sesion->createToken(Customer::find(1));
+
         $newDiscSession =  $this->discSession->firstOrCreate([
             'uuid' => Str::uuid(),
             'expire_at' => now()->addMinutes(60),
@@ -23,7 +29,7 @@ class DiscSessionController extends DiscController
         $newDiscSession->graph()->create([
             'uuid' => Str::uuid(),
             'graphs' => json_decode(str_replace(array("\r", "\n", " "), "", '{
-                "graphs": [{
+                "items": [{
                         "graphName": "less",
                         "graphLetters": {
                             "D": ' . 0 . ',
@@ -59,11 +65,6 @@ class DiscSessionController extends DiscController
 
     public function finish(Request $request)
     {
-        // if ($letter == $discRanges->disc->letter) {
-        //     if (false !== array_search($result, $RI->range[$i])) {
-        //         $profile[] = $discRanges->segment->number;
-        //     }
-        // }
 
         foreach ($request->all() as $letter => $result) {
 
@@ -87,8 +88,9 @@ class DiscSessionController extends DiscController
 
             return 'Combinação inválida';
         }
+
         $combination = DiscCombination::where('code', $profile[0] . $profile[1] . $profile[2] . $profile[3])->with('profile', 'category')->first();
         $combination->intensities = $intensities;
-        return $this->outputJSON( $combination, '', false);
+        return $this->outputJSON($combination, '', false);
     }
 }
