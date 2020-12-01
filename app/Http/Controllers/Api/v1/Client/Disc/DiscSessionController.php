@@ -17,7 +17,7 @@ class DiscSessionController extends DiscController
     {
         $sesion =  new CustomerDiscSession();
 
-        return $sesion->createToken(Customer::find(1));
+        // return $sesion->createToken(Customer::find(1));
 
         $newDiscSession =  $this->discSession->firstOrCreate([
             'uuid' => Str::uuid(),
