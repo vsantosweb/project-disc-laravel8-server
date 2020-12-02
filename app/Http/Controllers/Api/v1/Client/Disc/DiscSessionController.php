@@ -96,7 +96,7 @@ class DiscSessionController extends DiscController
 
         $combination = DiscCombination::where('code', $profile[0] . $profile[1] . $profile[2] . $profile[3])->with('profile', 'category')->first();
         $combination->intensities = $intensities;
-        $combination->graphs = $request->graphs['items'];
+        // $combination->graphs = $request->graphs['items'];
 
         if ($combination->disc_profile_id == 3 || $combination->disc_profile_id == 4 || $combination->disc_profile_id == 5) {
             return $this->outputJSON('Desvio', '', true, 200);
