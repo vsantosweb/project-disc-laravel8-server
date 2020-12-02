@@ -12,10 +12,10 @@ class RespondentController extends Controller
     public function getTest($code)
     {
       try {
-         $respondentTest =RespondentDiscTest::where('code', $code)->firstOrFail();
+         $respondentTest =RespondentDiscTest::where('code', $code)->with('respondent')->firstOrFail();
 
          $respondentTest->metadata = json_decode($respondentTest->metadata);
-         return $this->outputJSON(json_decode($respondentTest), '', false);
+         return $this->outputJSON($respondentTest, '', false);
       } catch (\Throwable $th) {
           return 'Houve um problema ao encontrar sua busca';
       }
