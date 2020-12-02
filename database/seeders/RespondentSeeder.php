@@ -24,7 +24,7 @@ class RespondentSeeder extends Seeder
             ],[
                 'uuid' => Str::uuid(),
                 'name' => 'Guilherme',
-                'email' => 'guilherme@propositomaior.com.br',
+                'email' => 'guilherme@teste.com.br',
                 'customer_id' => 1,
             ]
         ]);

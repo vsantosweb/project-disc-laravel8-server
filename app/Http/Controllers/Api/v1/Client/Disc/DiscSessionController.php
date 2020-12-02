@@ -76,7 +76,6 @@ class DiscSessionController extends DiscController
                     $test[] = $rangeIntensity->intensity;
 
                     if ($letter == $discRanges->disc->letter) {
-                        $ok[] =  $rangeIntensity->range;
                         if (false !== array_search($result, $rangeIntensity->range)) {
                             $profile[] = $discRanges->segment->number;
                             $intensities[] =  $rangeIntensity->intensity;
