@@ -74,6 +74,7 @@ Route::prefix('v1')->namespace('Api\v1')->group(function () {
                 Route::post('create', 'RespondentDiscSessionController@getToken');
             });
 
+            Route::get('disc/{code}', 'RespondentController@getTest');
         });
     });
 });

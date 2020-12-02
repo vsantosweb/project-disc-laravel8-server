@@ -16,6 +16,7 @@ class CreateRespondentDiscTestsTable extends Migration
         Schema::create('respondent_disc_tests', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('respondent_id');
+            $table->uuid('code', 60);
             $table->text('metadata');
             $table->timestamps();
 

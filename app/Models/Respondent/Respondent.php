@@ -2,6 +2,7 @@
 
 namespace App\Models\Respondent;
 
+use App\Models\Customer\Customer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -87,5 +88,10 @@ class Respondent extends Authenticatable implements JWTSubject
     public function discTests()
     {
         return $this->hasMany(RespondentDiscTest::class);
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
     }
 }

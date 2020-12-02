@@ -12,6 +12,7 @@ class RespondentDiscTest extends Model
 
     protected $fillable = [
         'respondent_id',
+        'code',
         'metadata',
     ];
 

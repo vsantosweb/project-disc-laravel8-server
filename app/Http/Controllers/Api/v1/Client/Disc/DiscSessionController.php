@@ -10,6 +10,7 @@ use App\Models\Respondent\Respondent;
 use App\Models\Respondent\RespondentDemograph;
 use App\Models\Respondent\RespondentDemographic;
 use App\Models\Respondent\RespondentDiscTest;
+use App\Notifications\TestFinished;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -91,26 +92,30 @@ class DiscSessionController extends DiscController
         }
 
         $combination = DiscCombination::where('code', $profile[0] . $profile[1] . $profile[2] . $profile[3])->with('profile', 'category')->first();
+        $combination->intensities = $intensities;
 
         if ($combination->disc_profile_id == 3 || $combination->disc_profile_id == 4 || $combination->disc_profile_id == 5) {
             return $this->outputJSON('Desvio', '', true, 200);
         }
 
         $respondent = Respondent::where('uuid', $request->respondent_uuid)->firstOrFail();
-
-        RespondentDiscTest::create([
+        $respondentTest = RespondentDiscTest::firstOrCreate([
             'respondent_id' => $respondent->id,
-            'metadata' => $combination
+            'code' => Str::random(15),
+            'metadata' => json_encode(str_replace(["\n", "\r"], '', $combination), true)
         ]);
 
 
-        if($request->demographic_data){
-           $newDemograph = RespondentDemographic::create($request->demographic_data);
-           $newDemograph->metadata = $combination;
-           $newDemograph->save();
+        if ($request->demographic_data) {
+
+            $newDemograph = RespondentDemographic::create($request->demographic_data);
+            $newDemograph->metadata = $combination;
+            $newDemograph->save();
         }
 
-        $combination->intensities = $intensities;
+
+        $respondent->customer->notify(new TestFinished($respondentTest));
+
         return $this->outputJSON($combination, '', false);
     }
 }
