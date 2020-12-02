@@ -26,6 +26,22 @@ class CustomerSeeder extends Seeder
                 'email_verified_at'=> now(),
                 'home_dir' => 'customers/'. md5(microtime())
             ],
+            [
+                'name'=> 'Juliana Carvalho Severo',
+                'uuid' => Str::uuid(),
+                'email'=> 'juliana.severo@sistemafiep.org.br',
+                'password'=> Hash::make('password'),
+                'email_verified_at'=> now(),
+                'home_dir' => 'customers/'. md5(microtime())
+            ],
+            [
+                'name'=> 'Glaucia Costa',
+                'uuid' => Str::uuid(),
+                'email'=> 'glauce.costa@sistemafiep.org.br',
+                'password'=> Hash::make('password'),
+                'email_verified_at'=> now(),
+                'home_dir' => 'customers/'. md5(microtime())
+            ],
 
         ]);
     }

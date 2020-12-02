@@ -22,15 +22,11 @@ class Respondent extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'uid',
+        'uuid',
+        'customer_id',
         'name',
         'email',
-        'password',
-        'rg',
-        'cpf',
-        'birthday',
-        'gender',
-        'is_reseller',
+        'custom_fields'
     ];
 
     /**

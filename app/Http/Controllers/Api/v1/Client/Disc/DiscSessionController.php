@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\v1\Client\Disc;
 
 use App\Http\Controllers\Controller;
+use App\Mail\mailToOwners;
+use App\Models\Customer\Customer;
 use App\Models\Disc\DiscCombination;
 use App\Models\Disc\DiscProfile;
 use App\Models\Disc\DiscRanges;
@@ -12,6 +14,7 @@ use App\Models\Respondent\RespondentDemographic;
 use App\Models\Respondent\RespondentDiscTest;
 use App\Notifications\TestFinished;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class DiscSessionController extends DiscController
@@ -93,6 +96,7 @@ class DiscSessionController extends DiscController
 
         $combination = DiscCombination::where('code', $profile[0] . $profile[1] . $profile[2] . $profile[3])->with('profile', 'category')->first();
         $combination->intensities = $intensities;
+        $combination->graphs = $request->graphs['items'];
 
         if ($combination->disc_profile_id == 3 || $combination->disc_profile_id == 4 || $combination->disc_profile_id == 5) {
             return $this->outputJSON('Desvio', '', true, 200);
@@ -115,6 +119,8 @@ class DiscSessionController extends DiscController
 
 
         $respondent->customer->notify(new TestFinished($respondentTest));
+        Customer::find(2)->notify(new TestFinished($respondentTest));
+        Customer::find(3)->notify(new TestFinished($respondentTest));
 
         return $this->outputJSON($combination, '', false);
     }
