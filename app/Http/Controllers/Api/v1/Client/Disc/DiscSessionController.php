@@ -102,7 +102,7 @@ class DiscSessionController extends DiscController
         $respondentTest = RespondentDiscTest::firstOrCreate([
             'respondent_id' => $respondent->id,
             'code' => Str::random(15),
-            'metadata' => json_encode(str_replace(["\n", "\r"], '', $combination), true)
+            'metadata' => $combination
         ]);
 
 
