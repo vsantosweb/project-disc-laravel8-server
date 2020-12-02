@@ -7,6 +7,9 @@ use App\Models\Disc\DiscCombination;
 use App\Models\Disc\DiscProfile;
 use App\Models\Disc\DiscRanges;
 use App\Models\Respondent\Respondent;
+use App\Models\Respondent\RespondentDemograph;
+use App\Models\Respondent\RespondentDemographic;
+use App\Models\Respondent\RespondentDiscTest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -95,6 +98,18 @@ class DiscSessionController extends DiscController
         }
 
         $respondent = Respondent::where('uuid', $request->respondent_uuid)->firstOrFail();
+
+        RespondentDiscTest::create([
+            'respondent_id' => $respondent->id,
+            'metadata' => $combination
+        ]);
+
+
+        if($request->demographic_data){
+           $newDemograph = RespondentDemographic::create($request->demographic_data);
+           $newDemograph->metadata = $combination;
+           $newDemograph->save();
+        }
 
         $combination->intensities = $intensities;
         return $this->outputJSON($combination, '', false);

@@ -15,16 +15,11 @@ class CreateRespondentDiscTestsTable extends Migration
     {
         Schema::create('respondent_disc_tests', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('email');
-            $table->string('rg')->nullable();
-            $table->string('cpf')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('birthday');
-            $table->string('gender')->nullable();
+            $table->unsignedBigInteger('respondent_id');
             $table->text('metadata');
             $table->timestamps();
+
+            $table->foreign('respondent_id')->references('id')->on('respondents');
         });
     }
 

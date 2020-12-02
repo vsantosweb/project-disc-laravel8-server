@@ -83,4 +83,9 @@ class Respondent extends Authenticatable implements JWTSubject
 
         return $session->token;
     }
+
+    public function discTests()
+    {
+        return $this->hasMany(RespondentDiscTest::class);
+    }
 }

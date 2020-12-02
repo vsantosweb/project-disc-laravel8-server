@@ -16,11 +16,14 @@ class CreateRespondentsTable extends Migration
         Schema::create('respondents', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid')->unique();
+            $table->unsignedBigInteger('customer_id');
+
             $table->string('name');
             $table->string('email');
             $table->text('custom_fields')->nullable();
 
             $table->timestamps();
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
         });
     }
 

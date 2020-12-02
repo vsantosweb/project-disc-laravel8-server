@@ -2,8 +2,6 @@
 
 namespace App\Mail\Disc;
 
-use App\Models\Customer\Customer;
-use App\Models\Customer\CustomerDiscSession;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -19,13 +17,13 @@ class SendDiscTest extends Mailable
      * @return void
      */
 
-    protected $customer;
+    protected $respondent;
     protected $session;
 
-    public function __construct($customer)
+    public function __construct($respondent)
     {
-       $this->customer = $customer;
-       $this->session = $customer->session;
+       $this->respondent = $respondent;
+       $this->session = $respondent->session;
 
     }
 
@@ -36,7 +34,8 @@ class SendDiscTest extends Mailable
      */
     public function build()
     {
-        $hashUrl = env('APP_URL') .DIRECTORY_SEPARATOR.'authDisc'. DIRECTORY_SEPARATOR.$this->session->token. DIRECTORY_SEPARATOR . $this->customer->uuid;
-        return $this->subject('Avaliação DISC')->view('mails.disc.sendDiscTestMail', ['customer'=> $this->customer, 'hashURL' => $hashUrl]);
+        $hashUrl = env('APP_URL') .DIRECTORY_SEPARATOR.'#/authDisc/authDisc'. DIRECTORY_SEPARATOR.$this->session->token. DIRECTORY_SEPARATOR . $this->respondent->uuid;
+        print_r([$hashUrl]);
+        return $this->subject('Avaliação DISC')->view('mails.disc.sendDiscTestMail', ['respondent'=> $this->respondent, 'hashURL' => $hashUrl]);
     }
 }

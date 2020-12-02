@@ -20,10 +20,12 @@ class RespondentSeeder extends Seeder
                 'uuid' => Str::uuid(),
                 'name' => 'Vitor Santos',
                 'email' => 'souzavito@hotmail.com',
+                'customer_id' => 1,
             ],[
                 'uuid' => Str::uuid(),
-                'name' => 'Mario Bross',
-                'email' => 'viktorlssantos@gmail.com',
+                'name' => 'Guilherme',
+                'email' => 'guilherme@propositomaior.com.br',
+                'customer_id' => 1,
             ]
         ]);
     }

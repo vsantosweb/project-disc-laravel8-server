@@ -15,6 +15,19 @@ class CreateRespondentDemographicsTable extends Migration
     {
         Schema::create('respondent_demographics', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('graduate')->nullable();
+            $table->string('current_occupation')->nullable();
+            $table->string('occupation')->nullable();
+            $table->string('nationality')->nullable();
+            $table->string('ancestors')->nullable();
+            $table->string('hometown')->nullable();
+            $table->string('age')->nullable();
+            $table->string('birthday')->nullable();
+            $table->string('gender')->nullable();
+            $table->text('metadata')->nullable();
             $table->timestamps();
         });
     }

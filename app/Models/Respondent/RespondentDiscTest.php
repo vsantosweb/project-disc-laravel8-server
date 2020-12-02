@@ -1,11 +1,24 @@
 <?php
 
-namespace App\Models\Customer;
+namespace App\Models\Respondent;
 
+use App\Models\Respondent\Respondent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CustomerDiscTest extends Model
+class RespondentDiscTest extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'respondent_id',
+        'metadata',
+    ];
+
+    protected $casts = ['metadata' => 'object'];
+
+    public function respondent()
+    {
+        return $this->belongsTo(Respondent::class);
+    }
 }

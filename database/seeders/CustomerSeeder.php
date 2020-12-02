@@ -19,20 +19,21 @@ class CustomerSeeder extends Seeder
         DB::table('customers')->insert([
 
             [
-                'name'=> 'John Doe',
+                'name'=> 'Ana Cintra',
                 'uuid' => Str::uuid(),
-                'email'=> 'souzavito@hotmail.com',
+                'email'=> 'ana.cintra@sistemafiep.org.br',
                 'password'=> Hash::make('password'),
-                'document_1'=> '36568989888',
-                'document_2'=> '56569987878',
-                'phone'=> '1156565987',
+                'document_1'=> '',
+                'document_2'=> '',
+                'company_name'=> 'Serviço Nacional de Aprendizagem Industrial (SENAI)',
+                'phone'=> '',
                 'email_verified_at'=> now(),
                 'home_dir' => 'customers/'. md5(microtime())
             ],
             [
-                'name'=> 'Mario Bross',
+                'name'=> 'John Doe',
                 'uuid' => Str::uuid(),
-                'email'=> 'mario@bross.com',
+                'email'=> 'souzavito@hotmail.com',
                 'password'=> Hash::make('password'),
                 'document_1'=> '36568989888',
                 'document_2'=> '56569987878',
