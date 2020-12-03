@@ -119,8 +119,6 @@ class DiscSessionController extends DiscController
 
 
         $respondent->customer->notify(new TestFinished($respondentTest));
-        Customer::find(2)->notify(new TestFinished($respondentTest));
-        Customer::find(3)->notify(new TestFinished($respondentTest));
 
         return $this->outputJSON($combination, '', false);
     }
