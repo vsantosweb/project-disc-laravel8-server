@@ -39,6 +39,7 @@ class RespondentDiscSessionController extends Controller
 
                 return $this->outputJSON('', 'Unauthorized', false, 401);
             }
+
             $session->token = Str::random(60);
             $session->save();
             return $this->outputJSON('', 'Session closed', false, 200);

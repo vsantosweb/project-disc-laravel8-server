@@ -21,7 +21,7 @@ class CustomerRespondentController extends Controller
      */
     public function index()
     {
-        return $this->outputJSON(auth()->user()->respondents()->with('respondentList')->get(), '', false);
+        return $this->outputJSON(auth()->user()->respondents()->with('discTests','respondentLists')->get(), '', false);
     }
 
     /**
