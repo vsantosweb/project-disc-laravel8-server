@@ -1,17 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1\Backoffice\Respondent;
+namespace App\Http\Controllers\Api\v1\Client\Customer;
 
 use App\Http\Controllers\Controller;
-use App\Models\Respondent\Respondent;
+use App\Models\Respondent\RespondentList;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
-class RespondentController extends Controller
+class CustomerRespondentListController extends Controller
 {
-    public function __construct(Respondent $respondent)
+
+    public function __construct(RespondentList $respondentList)
     {
-        $this->respondent = $respondent->with('discTests');
+        $this->respondentList = $respondentList;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +22,7 @@ class RespondentController extends Controller
      */
     public function index()
     {
-        return $this->respondent->all();
+        return $this->outputJSON(auth()->user()->respondentLists()->with('respondents')->get(), '', false);
     }
 
     /**
@@ -30,7 +33,19 @@ class RespondentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+
+            $newRespondentList = auth()->user()->respondentLists()->firstOrcreate([
+                'uuid' => Str::uuid(),
+                'name' => $request->name,
+                'description' => $request->description,
+                'settings' => $request->settings
+            ]);
+
+            return $this->outputJSON($newRespondentList, '', false);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
@@ -65,9 +80,5 @@ class RespondentController extends Controller
     public function destroy($id)
     {
         //
-    }
-    public function getTest($uuid)
-    {
-        return 'ok';
     }
 }

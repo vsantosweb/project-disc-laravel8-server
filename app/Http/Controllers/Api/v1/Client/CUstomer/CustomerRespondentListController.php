@@ -1,17 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1\Backoffice\Respondent;
+namespace App\Http\Controllers\Api\v1\Client\CUstomer;
 
 use App\Http\Controllers\Controller;
-use App\Models\Respondent\Respondent;
 use Illuminate\Http\Request;
 
-class RespondentController extends Controller
+class CustomerRespondentListController extends Controller
 {
-    public function __construct(Respondent $respondent)
-    {
-        $this->respondent = $respondent->with('discTests');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +14,7 @@ class RespondentController extends Controller
      */
     public function index()
     {
-        return $this->respondent->all();
+        //
     }
 
     /**
@@ -65,9 +60,5 @@ class RespondentController extends Controller
     public function destroy($id)
     {
         //
-    }
-    public function getTest($uuid)
-    {
-        return 'ok';
     }
 }

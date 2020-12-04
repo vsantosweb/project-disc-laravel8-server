@@ -18,38 +18,13 @@ class CustomerSeeder extends Seeder
     {
         DB::table('customers')->insert([
             [
-                'name'=> 'Ana Cintra',
+                'name'=> 'john doe',
                 'uuid' => Str::uuid(),
-                'email'=> 'ana.cintra@sistemafiep.org.br',
+                'email'=> 'souzavito@hotmail.com',
                 'password'=> Hash::make('password'),
                 'email_verified_at'=> now(),
                 'home_dir' => 'customers/'. md5(microtime())
             ],
-            [
-                'name'=> 'Ana Cintra',
-                'uuid' => Str::uuid(),
-                'email'=> 'ana.cintra@sistemafiep.org.br',
-                'password'=> Hash::make('password'),
-                'email_verified_at'=> now(),
-                'home_dir' => 'customers/'. md5(microtime())
-            ],
-            [
-                'name'=> 'Juliana Carvalho Severo',
-                'uuid' => Str::uuid(),
-                'email'=> 'juliana.severo@sistemafiep.org.br',
-                'password'=> Hash::make('password'),
-                'email_verified_at'=> now(),
-                'home_dir' => 'customers/'. md5(microtime())
-            ],
-            [
-                'name'=> 'Glaucia Costa',
-                'uuid' => Str::uuid(),
-                'email'=> 'glauce.costa@sistemafiep.org.br',
-                'password'=> Hash::make('password'),
-                'email_verified_at'=> now(),
-                'home_dir' => 'customers/'. md5(microtime())
-            ],
-
         ]);
     }
 }

@@ -10,9 +10,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Model;
 
 
-class Respondent extends Authenticatable implements JWTSubject
+class Respondent extends Model
 {
     use Notifiable, HasFactory;
 
@@ -45,6 +46,7 @@ class Respondent extends Authenticatable implements JWTSubject
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'custom_fields' => 'object'
     ];
 
     /**
@@ -89,5 +91,11 @@ class Respondent extends Authenticatable implements JWTSubject
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function respondentLists()
+    {
+        return $this->belongsToMany(RespondentList::class, 'respondents_to_lists');
+
     }
 }

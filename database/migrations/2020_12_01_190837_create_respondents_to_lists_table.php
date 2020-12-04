@@ -14,13 +14,14 @@ class CreateRespondentsToListsTable extends Migration
     public function up()
     {
         Schema::create('respondents_to_lists', function (Blueprint $table) {
+
+            $table->unsignedBigInteger('respondent_list_id');
             $table->unsignedBigInteger('respondent_id');
-            $table->unsignedBigInteger('list_id');
 
-            $table->primary(['respondent_id', 'list_id']);
+            $table->primary(['respondent_id', 'respondent_list_id']);
 
-            $table->foreign('respondent_id')->references('id')->on('respondents');
-            $table->foreign('list_id')->references('id')->on('respondent_lists')->onDelete('cascade');
+            $table->foreign('respondent_id')->references('id')->on('respondents')->onDelete('cascade');
+            $table->foreign('respondent_list_id')->references('id')->on('respondent_lists')->onDelete('cascade');
 
 
         });

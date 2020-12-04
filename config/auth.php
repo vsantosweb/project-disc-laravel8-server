@@ -49,11 +49,7 @@ return [
             'driver' => 'jwt',
             'provider' => 'customers',
         ],
-        'customer-token' => [
-            'driver' => 'token',
-            'provider' => 'customer-tokens',
-            'hash' => false,
-        ],
+
     ],
 
     /*
@@ -83,10 +79,7 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Customer\Customer::class,
         ],
-        'customer-tokens' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Customer\CustomerDiscSession::class,
-        ],
+
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

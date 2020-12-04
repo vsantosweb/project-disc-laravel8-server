@@ -24,11 +24,11 @@ class RespondentListSeeder extends Seeder
         DB::table('respondents_to_lists')->insert([
             [
                 'respondent_id' => 1,
-                'list_id' => 1,
+                'respondent_list_id' => 1,
             ],
             [
                 'respondent_id' => 2,
-                'list_id' => 1,
+                'respondent_list_id' => 1,
             ]
         ]);
     }
