@@ -20,7 +20,6 @@ class CreateRespondentDiscTestsTable extends Migration
             $table->text('metadata');
             $table->timestamps();
 
-            $table->foreign('respondent_id')->references('id')->on('respondents')->onDelete('cascade');
         });
     }
 

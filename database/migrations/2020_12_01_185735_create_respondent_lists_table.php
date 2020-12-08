@@ -18,8 +18,6 @@ class CreateRespondentListsTable extends Migration
             $table->uuid('uuid');
             $table->unsignedBigInteger('customer_id');
             $table->string('name');
-            $table->string('description')->nullable();
-            $table->text('settings')->nullable();
             $table->timestamps();
 
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
