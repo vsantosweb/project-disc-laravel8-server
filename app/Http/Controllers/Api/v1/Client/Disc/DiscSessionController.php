@@ -103,9 +103,10 @@ class DiscSessionController extends DiscController
         }
 
         $respondent = Respondent::where('uuid', $request->respondent_uuid)->firstOrFail();
+
         $respondentTest = RespondentDiscTest::firstOrCreate([
             'respondent_id' => $respondent->id,
-            'code' => Str::random(15),
+            'code' => Str::random(60),
             'metadata' => $combination
         ]);
 

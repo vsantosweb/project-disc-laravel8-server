@@ -20,16 +20,5 @@ class RespondentListSeeder extends Seeder
             'customer_id' => 1,
             'name' => 'Lista 1',
         ]);
-
-        DB::table('respondents_to_lists')->insert([
-            [
-                'respondent_id' => 1,
-                'respondent_list_id' => 1,
-            ],
-            [
-                'respondent_id' => 2,
-                'respondent_list_id' => 1,
-            ]
-        ]);
     }
 }

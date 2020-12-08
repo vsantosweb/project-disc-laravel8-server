@@ -25,6 +25,7 @@ class RespondentDiscSessionController extends Controller
 
             return $this->outputJSON($respondent, '', false, 200);
         }
+
         return $this->outputJSON('', 'Bad Request', true, 401);
     }
 
@@ -42,6 +43,7 @@ class RespondentDiscSessionController extends Controller
 
             $session->token = Str::random(60);
             $session->save();
+
             return $this->outputJSON('', 'Session closed', false, 200);
         }
         return $this->outputJSON('', 'Bad Request', true, 401);

@@ -19,6 +19,7 @@ class ContactsImport implements ToCollection
             Respondent::firstOrCreate([
                 'name'=> $row[1],
                 'customer_id' => 1,
+                'respondent_list_id' => 1,
                 'uuid' => Str::uuid(),
                 'email' => $row[3]
             ]);

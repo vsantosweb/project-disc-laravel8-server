@@ -3,10 +3,10 @@
 namespace App\Models\Respondent;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class RespondentDiscSession extends Authenticatable
+class RespondentDiscSession extends Model
 {
     use HasFactory;
 
@@ -15,9 +15,10 @@ class RespondentDiscSession extends Authenticatable
     public function createToken($respondent)
     {
         $token = $this->create([
-            'token' => hash('sha256', Str::random(60)),
+            'token' => hash('sha256', $respondent->email),
             'email' => $respondent->email
         ]);
+
         $token->uuid = $respondent->uuid;
         return $token;
     }
@@ -27,13 +28,13 @@ class RespondentDiscSession extends Authenticatable
         if (!is_null($token) && !is_null($uuid)) {
 
             $respondent = Respondent::where('uuid', $uuid)->first();
-            $session = $this::where('token',  $token)->first();
 
-            if (is_null($session) && is_null($respondent)) {
-                return false;
+            if(hash('sha256', $respondent->email) == $token){
+                return true;
             }
 
-            return true;
+            return false;
         }
+        return false;
     }
 }

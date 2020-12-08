@@ -20,7 +20,7 @@ class CreateDiscGraphsTable extends Migration
             $table->text('graphs')->nullable();
             $table->timestamps();
 
-            $table->foreign('disc_session_id')->references('id')->on('disc_sessions');
+            $table->foreign('disc_session_id')->references('id')->on('disc_sessions')->onDelete('cascade');
         });
     }
 

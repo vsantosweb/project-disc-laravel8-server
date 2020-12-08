@@ -25,8 +25,10 @@ class Respondent extends Model
     protected $fillable = [
         'uuid',
         'customer_id',
+        'respondent_list_id',
         'name',
         'email',
+        'status',
         'custom_fields'
     ];
 
@@ -49,40 +51,6 @@ class Respondent extends Model
         'custom_fields' => 'object'
     ];
 
-    /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
-     */
-    public function getJWTCustomClaims()
-    {
-        return [];
-    }
-    /**
-     * Cria uma sessão temporária baseada no email e um token aleatório.
-     *
-     * @return array
-     */
-    public function sessionHash()
-    {
-        $session = RespondentDiscSession::create([
-            'email' => $this->email,
-            'token' => Str::random(100)
-        ]);
-
-        return $session->token;
-    }
-
     public function discTests()
     {
         return $this->hasMany(RespondentDiscTest::class);
@@ -93,9 +61,8 @@ class Respondent extends Model
         return $this->belongsTo(Customer::class);
     }
 
-    public function respondentLists()
+    public function list()
     {
-        return $this->belongsToMany(RespondentList::class, 'respondents_to_lists');
-
+        return $this->belongsTo(RespondentList::class, 'respondent_list_id');
     }
 }

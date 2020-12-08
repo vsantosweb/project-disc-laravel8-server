@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class DiscController extends DiscDiscController
 {
+    public function create(Request $request)
+    {
+        return $request->all();
+    }
     public function questions()
     {
         return $this->outputJSON($this->discQuestion->with('options')->get(),'', false);

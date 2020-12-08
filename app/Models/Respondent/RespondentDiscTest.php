@@ -22,4 +22,9 @@ class RespondentDiscTest extends Model
     {
         return $this->belongsTo(Respondent::class);
     }
+
+    public function make($respondents = [])
+    {
+        return $respondents;
+    }
 }
