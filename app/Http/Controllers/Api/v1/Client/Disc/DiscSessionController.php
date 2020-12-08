@@ -107,7 +107,8 @@ class DiscSessionController extends DiscController
         $respondentTest = RespondentDiscTest::firstOrCreate([
             'respondent_id' => $respondent->id,
             'code' => Str::random(15),
-            'metadata' => $combination
+            'metadata' => $combination,
+            'was_finished' => 1,
         ]);
 
 
