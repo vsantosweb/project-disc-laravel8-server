@@ -29,6 +29,7 @@ class Respondent extends Model
         'name',
         'email',
         'status',
+        'respondent_list_id',
         'custom_fields'
     ];
 

@@ -21,7 +21,7 @@ class CustomerRespondentController extends Controller
      */
     public function index()
     {
-        return $this->outputJSON(auth()->user()->respondents()->with('discTests','respondentLists')->get(), '', false);
+        return $this->outputJSON(auth()->user()->respondents()->with('discTests','list')->get(), '', false);
     }
 
     /**
@@ -39,12 +39,12 @@ class CustomerRespondentController extends Controller
                 'uuid' => Str::uuid(),
                 'name' => $request->name,
                 'email' => $request->email,
+                'respondent_list_id' => $request->respondent_list_id,
                 'custom_fields' => $request->custom_fields,
             ]);
 
-            $newRespondent->respondentLists()->sync([$request->respondent_list_id]);
 
-            return $this->outputJSON($newRespondent->with('respondentLists')->find($newRespondent->id), '', false);
+            return $this->outputJSON($newRespondent->with('list')->find($newRespondent->id), '', false);
         } catch (\Throwable $th) {
             throw $th;
         }
