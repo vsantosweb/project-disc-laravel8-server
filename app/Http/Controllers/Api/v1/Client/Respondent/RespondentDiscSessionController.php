@@ -34,7 +34,7 @@ class RespondentDiscSessionController extends Controller
         if(!is_null($request->query('token')) && !is_null($request->query('uuid'))){
 
             $session = RespondentDiscSession::where('token',  $request->query('token'))->first();
-            $respondent = Respondent::where('email', $session->email)->first();
+            $respondent = Respondent::where('uuid', $session->uuid)->first();
 
             if(is_null($respondent) || is_null($session)){
 
