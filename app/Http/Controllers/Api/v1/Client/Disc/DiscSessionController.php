@@ -70,19 +70,19 @@ class DiscSessionController extends DiscController
 
     public function finish(Request $request)
     {
-        $graphDiff = $request->graphs['items'][2];
+        $graphs = $request->graphs['items'];
 
-        foreach ($graphDiff['graphLetters'] as $letter => $result) {
-
-            foreach (DiscRanges::all() as $discRanges) {
-                foreach ($discRanges->range as $rangeIntensity) {
-
-                    $test[] = $rangeIntensity->intensity;
-
-                    if ($letter == $discRanges->disc->letter) {
-                        if (false !== array_search($result, $rangeIntensity->range)) {
-                            $profile[] = $discRanges->segment->number;
-                            $intensities[] =  $rangeIntensity->intensity;
+        for($i = 0; $i < count($graphs);$i++ ){
+            foreach ($graphs[$i]['graphLetters'] as $letter => $value) {
+                foreach (DiscRanges::all() as $discRanges) {
+                    if ($discRanges->graphType->name == $graphs[$i]['graphName']) {
+                        foreach ($discRanges->range as $rangeIntensity) {
+                            if ($letter == $discRanges->disc->letter) {
+                                if (false !== array_search($value, $rangeIntensity->range)) {
+                                    $profile[] = $discRanges->segment->number;
+                                    $intensities[$graphs[$i]['graphName']][] =  $rangeIntensity->intensity;
+                                }
+                            }
                         }
                     }
                 }
@@ -111,14 +111,12 @@ class DiscSessionController extends DiscController
             'was_finished' => 1,
         ]);
 
-
         if ($request->demographic_data) {
 
             $newDemograph = RespondentDemographic::create($request->demographic_data);
-            $newDemograph->metadata = $combination;
+            $newDemograph->metadata =['intensities'=>$combination->intensities,$combination->graphs, $combination->profile->name.' '.$combination->category->name];
             $newDemograph->save();
         }
-
 
         $respondent->customer->notify(new TestFinished($respondentTest));
 

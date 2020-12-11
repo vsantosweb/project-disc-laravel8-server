@@ -24,4 +24,9 @@ class DiscRanges extends Model
     {
         return $this->belongsTo(DiscSegment::class);
     }
+
+    public function graphType()
+    {
+        return $this->belongsTo(DiscGraphType::class, 'disc_graph_type_id');
+    }
 }
