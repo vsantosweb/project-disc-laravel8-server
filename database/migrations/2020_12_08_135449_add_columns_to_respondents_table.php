@@ -28,7 +28,7 @@ class AddColumnsToRespondentsTable extends Migration
     public function down()
     {
         Schema::table('respondents', function (Blueprint $table) {
-            //
+            Schema::dropIfExists('respondents');
         });
     }
 }
