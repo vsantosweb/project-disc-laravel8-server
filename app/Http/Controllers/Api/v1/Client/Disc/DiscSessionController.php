@@ -119,7 +119,9 @@ class DiscSessionController extends DiscController
             $newDemograph->save();
         }
 
-        Notification::route('mail', $respondent->list->settings->ownerMailList)->notify(new TestFinished($respondentTest));
+        if(!empty($respondent->list->settings->ownerMailList)){
+            Notification::route('mail', $respondent->list->settings->ownerMailList)->notify(new TestFinished($respondentTest));
+        }
 
         return $this->outputJSON($combination, '', false);
     }

@@ -26,9 +26,10 @@ Route::prefix('customer')->namespace('Api\v1\Client\Customer')->group(function (
     });
 
     Route::middleware('auth:customer')->group(function () {
-
         Route::resource('respondents', 'CustomerRespondentController');
         Route::resource('respondent-lists', 'CustomerRespondentListController');
         Route::post('create-disc', 'CustomerDiscController@create');
+        Route::get('filter', 'CustomerDiscController@filter');
     });
+
 });
