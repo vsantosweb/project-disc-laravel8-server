@@ -14,8 +14,6 @@ class RespondentController extends Controller
       try {
 
         $respondentTest = RespondentDiscTest::where('code', $code)->with('respondent')->firstOrFail();
-
-        $respondentTest->metadata = json_decode($respondentTest->metadata);
         return $this->outputJSON($respondentTest, '', false);
 
       } catch (\Throwable $th) {
