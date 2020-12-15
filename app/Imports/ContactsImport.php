@@ -16,13 +16,16 @@ class ContactsImport implements ToCollection
     {
         foreach($rows as $row){
 
-            Respondent::firstOrCreate([
-                'name'=> $row[1],
+           $respondent = Respondent::firstOrCreate([
+                'name'=> $row[0],
                 'customer_id' => 1,
-                'respondent_list_id' => 1,
+                'respondent_list_id' => 3,
                 'uuid' => Str::uuid(),
-                'email' => $row[3]
+                'email' => $row[1]
             ]);
+
+            echo  $respondent->email;
+            echo count( $respondent->all()). ' Importados';
         }
     }
 }

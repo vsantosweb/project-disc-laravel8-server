@@ -11,13 +11,7 @@ class RespondentController extends Controller
 {
     public function getTest($code)
     {
-      try {
-
         $respondentTest = RespondentDiscTest::where('code', $code)->with('respondent')->firstOrFail();
         return $this->outputJSON($respondentTest, '', false);
-
-      } catch (\Throwable $th) {
-          return $th;
-      }
     }
 }

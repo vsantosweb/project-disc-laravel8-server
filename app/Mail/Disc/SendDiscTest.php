@@ -34,8 +34,7 @@ class SendDiscTest extends Mailable
      */
     public function build()
     {
-        $hashUrl = env('APP_URL') .DIRECTORY_SEPARATOR.'#/authDisc'. DIRECTORY_SEPARATOR.$this->session->token. DIRECTORY_SEPARATOR . $this->respondent->uuid;
-        print_r([$hashUrl]);
+        $hashUrl = env('APP_URL') .DIRECTORY_SEPARATOR.'/authDisc'. DIRECTORY_SEPARATOR.$this->session->token. DIRECTORY_SEPARATOR . $this->respondent->uuid;
         return $this->subject('Avaliação DISC')->view('mails.disc.sendDiscTestMail', ['respondent'=> $this->respondent, 'hashURL' => $hashUrl]);
     }
 }

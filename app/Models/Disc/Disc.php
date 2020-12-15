@@ -30,6 +30,11 @@ class Disc extends Model
 
         foreach ($lists as $list) {
 
+            if($list->respondents->isEmpty()){
+
+                throw new \Exception('Sem itens na lista', 1);
+            }
+
             foreach ($list->respondents as $respondent) {
 
                 $session =  RespondentDiscSession::firstOrCreate([
