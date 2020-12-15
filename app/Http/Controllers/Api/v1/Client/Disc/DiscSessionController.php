@@ -121,6 +121,6 @@ class DiscSessionController extends DiscController
 
         Notification::route('mail', $respondent->list->settings->ownerMailList)->notify(new TestFinished($respondentTest));
 
-        return $this->outputJSON($respondentTest, '', false);
+        return $this->outputJSON($combination, '', false);
     }
 }
