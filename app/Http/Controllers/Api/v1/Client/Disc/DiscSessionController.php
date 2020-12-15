@@ -108,7 +108,7 @@ class DiscSessionController extends DiscController
 
         $respondentTest->update([
             'metadata' => $combination,
-            'was_finished' => 0,
+            'was_finished' => 1,
             'ip' => $request->ip()
         ]);
 
