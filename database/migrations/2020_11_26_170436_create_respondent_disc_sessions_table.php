@@ -17,6 +17,7 @@ class CreateRespondentDiscSessionsTable extends Migration
             $table->id();
             $table->string('email', 100);
             $table->string('token', 100);
+            $table->string('session_url')->nullable();
             $table->dateTime('expire_at')->nullable();
             $table->timestamps();
         });

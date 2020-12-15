@@ -14,6 +14,10 @@ class RespondentDiscTest extends Model
         'respondent_id',
         'code',
         'metadata',
+        'ip',
+        'geolocation',
+        'was_finished',
+        'user_agent'
     ];
 
     protected $casts = ['metadata' => 'object'];

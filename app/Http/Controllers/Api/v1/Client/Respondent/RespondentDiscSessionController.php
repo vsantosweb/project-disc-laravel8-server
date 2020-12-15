@@ -54,7 +54,7 @@ class RespondentDiscSessionController extends Controller
         return $this->outputJSON('', 'Bad Request', true, 401);
     }
 
-    public function getToken()
+    public function makeSession()
     {
         $session = new RespondentDiscSession;
 

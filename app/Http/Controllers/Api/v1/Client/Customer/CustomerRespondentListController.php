@@ -81,4 +81,9 @@ class CustomerRespondentListController extends Controller
     {
         //
     }
+
+    public function createDiscTestToList(Request $request)
+    {
+
+    }
 }

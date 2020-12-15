@@ -14,7 +14,7 @@ use App\Models\Respondent\RespondentDemographic;
 use App\Models\Respondent\RespondentDiscTest;
 use App\Notifications\TestFinished;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 
 class DiscSessionController extends DiscController
@@ -104,22 +104,23 @@ class DiscSessionController extends DiscController
 
         $respondent = Respondent::where('uuid', $request->respondent_uuid)->firstOrFail();
 
-        $respondentTest = RespondentDiscTest::firstOrCreate([
-            'respondent_id' => $respondent->id,
-            'code' => Str::random(15),
+        $respondentTest = RespondentDiscTest::where('code', $request->disc_test_code)->where('was_finished', 0)->firstOrFail();
+
+        $respondentTest->update([
             'metadata' => $combination,
-            'was_finished' => 1,
+            'was_finished' => 0,
+            'ip' => $request->ip()
         ]);
 
         if ($request->demographic_data) {
 
             $newDemograph = RespondentDemographic::create($request->demographic_data);
-            $newDemograph->metadata =['intensities'=>$combination->intensities,$combination->graphs, $combination->profile->name.' '.$combination->category->name];
+            $newDemograph->metadata = ['intensities '=> $combination->intensities,$combination->graphs, $combination->profile->name.' '.$combination->category->name];
             $newDemograph->save();
         }
 
-        $respondent->customer->notify(new TestFinished($respondentTest));
+        Notification::route('mail', $respondent->list->settings->ownerMailList)->notify(new TestFinished($respondentTest));
 
-        return $this->outputJSON($combination, '', false);
+        return $this->outputJSON($respondentTest, '', false);
     }
 }

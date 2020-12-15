@@ -15,22 +15,22 @@ class RespondentSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('respondents')->insert([
-            [
-                'uuid' => Str::uuid(),
-                'name' => 'Vitor Santos',
-                'email' => 'souzavito@hotmail.com',
-                'customer_id' => 1,
-                'respondent_list_id' => 1,
-            ],
-            [
-                'uuid' => Str::uuid(),
-                'name' => 'Guilherme',
-                'email' => 'guilherme@teste.com.br',
-                'customer_id' => 1,
-                'respondent_list_id' => 1,
-            ],
-        ]);
+        // DB::table('respondents')->insert([
+        //     [
+        //         'uuid' => Str::uuid(),
+        //         'name' => 'Vitor Santos',
+        //         'email' => 'souzavito@hotmail.com',
+        //         'customer_id' => 1,
+        //         'respondent_list_id' => 1,
+        //     ],
+        //     [
+        //         'uuid' => Str::uuid(),
+        //         'name' => 'Guilherme',
+        //         'email' => 'guilherme@teste.com.br',
+        //         'customer_id' => 1,
+        //         'respondent_list_id' => 1,
+        //     ],
+        // ]);
     }
 }
 

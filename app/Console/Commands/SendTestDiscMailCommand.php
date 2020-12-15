@@ -52,7 +52,6 @@ class SendTestDiscMailCommand extends Command
 
             $respondent->session = $session;
             Mail::to($session->email)->later($when, new SendDiscTest($respondent));
-
         }
     }
 }

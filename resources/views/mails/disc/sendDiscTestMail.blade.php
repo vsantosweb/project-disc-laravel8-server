@@ -19,6 +19,6 @@
     </p>
     <hr />
 
-    <a href={{ $hashURL }}> {{ $hashURL }} </a>
+    <a href={{ $respondent->session->session_url }}> {{ $respondent->session->session_url }} </a>
 
 </body>

@@ -14,7 +14,6 @@ class AlterForeignToRespondentDiscTestsTable extends Migration
     public function up()
     {
         Schema::table('respondent_disc_tests', function (Blueprint $table) {
-            $table->dropForeign(['respondent_id']);
             $table->foreign('respondent_id')->references('id')->on('respondents')->onDelete('cascade');
         });
     }
