@@ -15,7 +15,7 @@ class RespondentList extends Model
 
     public function respondents()
     {
-        return $this->hasMany(Respondent::class)->with('discTests');
+        return $this->hasMany(Respondent::class);
     }
 
     public function customer()
