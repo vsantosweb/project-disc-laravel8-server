@@ -40,7 +40,7 @@ class TestFinished extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = env('APP_URL') . DIRECTORY_SEPARATOR . '#/report' . DIRECTORY_SEPARATOR . $this->discTest->code;
+        $url = env('APP_URL') . DIRECTORY_SEPARATOR . 'report' . DIRECTORY_SEPARATOR . $this->discTest->code;
 
         return (new MailMessage)
             ->subject('O respondente ' . $this->discTest->respondent->name . ' finalizou o teste')

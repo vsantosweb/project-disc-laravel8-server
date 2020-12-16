@@ -30,7 +30,6 @@ class mailToOwners extends Mailable
      */
     public function build()
     {
-        dd($this->discTest->respondent);
         $url = env('APP_URL') . DIRECTORY_SEPARATOR . 'report' . DIRECTORY_SEPARATOR . $this->discTest->code;
 
         return $this->subject('O respondente ' . $this->discTest->respondent->name . ' finalizou o teste')
