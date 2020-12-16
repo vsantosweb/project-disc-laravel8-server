@@ -30,7 +30,7 @@ class CustomerDiscController extends Controller
             ->join('customers AS customer', 'customer.id', 'respondent.customer_id')->where('respondent.customer_id', auth()->user()->id);
 
         $discTestQuery = isset($request->was_finished) ? $discTestQuery->where('was_finished', $request->was_finished) : $discTestQuery;
-        $discTestQuery = isset($request->email) ? $discTestQuery->where('email', $request->email) : $discTestQuery;
+        $discTestQuery = isset($request->email) ? $discTestQuery->where('respondent.email', $request->email) : $discTestQuery;
 
         return $this->outputJSON($discTestQuery->paginate(25), '', false);
     }

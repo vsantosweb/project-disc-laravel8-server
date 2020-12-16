@@ -53,11 +53,4 @@ class RespondentDiscSessionController extends Controller
         }
         return $this->outputJSON('', 'Bad Request', true, 401);
     }
-
-    public function getToken()
-    {
-        $session = new RespondentDiscSession;
-
-       return $session->createToken(Respondent::find(1));
-    }
 }
