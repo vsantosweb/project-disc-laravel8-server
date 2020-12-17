@@ -90,12 +90,12 @@ class CustomerRespondentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
+
         try {
 
-            $respondent = auth()->user()->respondents()->findOrFail($id);
-            $respondent->delete();
+            $respondent = auth()->user()->respondents()->whereIn('uuid', $request->uuids)->delete();
 
             return $this->outputJSON($respondent, 'Success', false);
         } catch (\Exception $e) {

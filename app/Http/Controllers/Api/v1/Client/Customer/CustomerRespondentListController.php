@@ -57,7 +57,7 @@ class CustomerRespondentListController extends Controller
      */
     public function show($id)
     {
-        $respondentList = $this->respondentList->findOrFail($id)->with('respondents')->first();
+        $respondentList = auth()->user()->respondentLists()->findOrFail($id)->with('respondents')->first();
         return $this->outputJSON($respondentList, 'Success', false);
     }
 
@@ -70,7 +70,7 @@ class CustomerRespondentListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $respondentList = $this->respondentList->findOrFail($id);
+        $respondentList = auth()->user()->respondentLists()->findOrFail($id);
 
         try {
             $respondentList->update($request->all());
@@ -87,13 +87,10 @@ class CustomerRespondentListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $respondentList = $this->respondentList->findOrFail($id);
-
         try {
-            $respondentList->delete();
-
+            $respondentList = auth()->user()->respondentLists()->whereIn('uuid', $request->uuids)->delete();
             return $this->outputJSON($respondentList, 'Success', false);
         } catch (\Exception $e) {
             return $this->outputJSON('', $e->getMessage(), true, 500);

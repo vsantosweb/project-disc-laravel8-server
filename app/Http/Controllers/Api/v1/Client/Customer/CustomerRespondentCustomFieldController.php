@@ -79,12 +79,11 @@ class CustomerRespondentCustomFieldController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         try {
 
-            $newRespondentCustomField = auth()->user()->respondentCustomFields()->findOrfail($id);
-            $newRespondentCustomField->delete();
+            $newRespondentCustomField = auth()->user()->respondentCustomFields()->whereIn('id', $request->ids)->delete();
 
             return $this->outputJSON($newRespondentCustomField, 'Success', false);
         } catch (\Exception $e) {
