@@ -3,18 +3,15 @@
 namespace App\Http\Controllers\Api\v1\Client\Customer;
 
 use App\Http\Controllers\Controller;
-use App\Models\Respondent\RespondentList;
+use App\Models\Respondent\RespondentCustomField;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
-class CustomerRespondentListController extends Controller
+class CustomerRespondentCustomFieldController extends Controller
 {
-
-    public function __construct(RespondentList $respondentList)
+    public function __construct(RespondentCustomField $respondentCustomField)
     {
-        $this->respondentList = $respondentList;
+        $this->respondentCustomField = $respondentCustomField;
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +19,7 @@ class CustomerRespondentListController extends Controller
      */
     public function index()
     {
-        return $this->outputJSON(auth()->user()->respondentLists()->with('respondents')->get(), '', false);
+        return $this->outputJSON(auth()->user()->respondentCustomFields()->get(), 'Success', false);
     }
 
     /**
@@ -35,17 +32,12 @@ class CustomerRespondentListController extends Controller
     {
         try {
 
-            $newRespondentList = auth()->user()->respondentLists()->firstOrcreate([
-                'uuid' => Str::uuid(),
-                'name' => $request->name,
-                'description' => $request->description,
-                'settings' => $request->settings
-            ]);
+            $newRespondentCustomField = auth()->user()->respondentCustomFields()->firstOrCreate($request->all());
 
-            return $this->outputJSON($newRespondentList, '', false);
+            return $this->outputJSON($newRespondentCustomField, 'Success', false);
         } catch (\Exception $e) {
 
-            return $this->outputJSON('', $e->getMessage(), false);
+            return $this->outputJSON('', $e->getMessage(), true, 500);
         }
     }
 
@@ -57,8 +49,7 @@ class CustomerRespondentListController extends Controller
      */
     public function show($id)
     {
-        $respondentList = $this->respondentList->findOrFail($id)->with('respondents')->first();
-        return $this->outputJSON($respondentList, 'Success', false);
+        //
     }
 
     /**
@@ -70,13 +61,14 @@ class CustomerRespondentListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $respondentList = $this->respondentList->findOrFail($id);
-
         try {
-            $respondentList->update($request->all());
 
-            return $this->outputJSON($respondentList, 'Success', false);
+            $newRespondentCustomField = auth()->user()->respondentCustomFields()->findOrfail($id);
+            $newRespondentCustomField->update($request->all());
+
+            return $this->outputJSON($newRespondentCustomField, 'Success', false);
         } catch (\Exception $e) {
+
             return $this->outputJSON('', $e->getMessage(), true, 500);
         }
     }
@@ -89,13 +81,14 @@ class CustomerRespondentListController extends Controller
      */
     public function destroy($id)
     {
-        $respondentList = $this->respondentList->findOrFail($id);
-
         try {
-            $respondentList->delete();
 
-            return $this->outputJSON($respondentList, 'Success', false);
+            $newRespondentCustomField = auth()->user()->respondentCustomFields()->findOrfail($id);
+            $newRespondentCustomField->delete();
+
+            return $this->outputJSON($newRespondentCustomField, 'Success', false);
         } catch (\Exception $e) {
+
             return $this->outputJSON('', $e->getMessage(), true, 500);
         }
     }

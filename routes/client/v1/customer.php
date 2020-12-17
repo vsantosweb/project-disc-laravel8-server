@@ -30,6 +30,10 @@ Route::prefix('customer')->namespace('Api\v1\Client\Customer')->group(function (
         Route::resource('respondent-lists', 'CustomerRespondentListController');
         Route::post('create-disc', 'CustomerDiscController@create');
         Route::get('filter', 'CustomerDiscController@filter');
+
+        Route::prefix('settings')->group(function(){
+            Route::resource('custom-fields', 'CustomerRespondentCustomFieldController');
+        });
     });
 
 });

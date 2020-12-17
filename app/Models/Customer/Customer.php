@@ -3,6 +3,7 @@
 namespace App\Models\Customer;
 
 use App\Models\Respondent\Respondent;
+use App\Models\Respondent\RespondentCustomField;
 use App\Models\Respondent\RespondentList;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -69,5 +70,10 @@ class Customer extends Authenticatable implements JWTSubject
     public function respondentLists()
     {
         return $this->hasMany(RespondentList::class);
+    }
+
+    public function respondentCustomFields()
+    {
+        return $this->hasMany(RespondentCustomField::class);
     }
 }

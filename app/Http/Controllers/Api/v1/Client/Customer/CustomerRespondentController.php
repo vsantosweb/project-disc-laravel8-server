@@ -21,7 +21,7 @@ class CustomerRespondentController extends Controller
      */
     public function index()
     {
-        return $this->outputJSON(auth()->user()->respondents()->with('discTests','list')->get(), '', false);
+        return $this->outputJSON(auth()->user()->respondents()->with('discTests', 'list')->get(), 'Success', false);
     }
 
     /**
@@ -44,9 +44,10 @@ class CustomerRespondentController extends Controller
             ]);
 
 
-            return $this->outputJSON($newRespondent->with('list')->find($newRespondent->id), '', false);
-        } catch (\Throwable $th) {
-            throw $th;
+            return $this->outputJSON($newRespondent->with('list')->find($newRespondent->id), 'Success', false);
+        } catch (\Exception $e) {
+
+            return $this->outputJSON('', $e->getMessage(), false);
         }
     }
 
@@ -56,8 +57,10 @@ class CustomerRespondentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($uuid)
     {
+        $respondent = auth()->user()->respondents()->where('uuid', $uuid);
+        return $this->outputJSON($respondent->with('list', 'discTests')->first(), 'Success', false);
     }
 
     /**
@@ -69,7 +72,16 @@ class CustomerRespondentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+
+            $respondent = auth()->user()->respondents()->findOrFail($id);
+            $respondent->update($request->all());
+
+            return $this->outputJSON($respondent->with('list')->first(), 'Success', false);
+        } catch (\Exception $e) {
+
+            return $this->outputJSON('', $e->getMessage(), false);
+        }
     }
 
     /**
@@ -80,6 +92,15 @@ class CustomerRespondentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+
+            $respondent = auth()->user()->respondents()->findOrFail($id);
+            $respondent->delete();
+
+            return $this->outputJSON($respondent, 'Success', false);
+        } catch (\Exception $e) {
+
+            return $this->outputJSON('', $e->getMessage(), false);
+        }
     }
 }
