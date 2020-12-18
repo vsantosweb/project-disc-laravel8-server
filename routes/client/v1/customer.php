@@ -26,6 +26,13 @@ Route::prefix('customer')->namespace('Api\v1\Client\Customer')->group(function (
     });
 
     Route::middleware('auth:customer')->group(function () {
+
+        Route::prefix('profile')->group(function(){
+            Route::patch('update', 'CustomerProfileController@updateProfile');
+            Route::put('change-password', 'CustomerProfileController@changePassword');
+
+        });
+
         Route::resource('respondents', 'CustomerRespondentController');
         Route::resource('respondent-lists', 'CustomerRespondentListController');
         Route::post('create-disc', 'CustomerDiscController@create');

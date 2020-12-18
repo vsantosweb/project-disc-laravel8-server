@@ -72,7 +72,7 @@ class DiscSessionController extends DiscController
     {
         $graphs = $request->graphs['items'];
 
-        for($i = 0; $i < count($graphs);$i++ ){
+        for ($i = 0; $i < count($graphs); $i++) {
             foreach ($graphs[$i]['graphLetters'] as $letter => $value) {
                 foreach (DiscRanges::all() as $discRanges) {
                     if ($discRanges->graphType->name == $graphs[$i]['graphName']) {
@@ -115,11 +115,11 @@ class DiscSessionController extends DiscController
         if ($request->demographic_data) {
 
             $newDemograph = RespondentDemographic::create($request->demographic_data);
-            $newDemograph->metadata = ['intensities '=> $combination->intensities,$combination->graphs, $combination->profile->name.' '.$combination->category->name];
+            $newDemograph->metadata = ['intensities ' => $combination->intensities, $combination->graphs, $combination->profile->name . ' ' . $combination->category->name];
             $newDemograph->save();
         }
 
-        if(!empty($respondent->list->settings->ownerMailList)){
+        if (!empty($respondent->list->settings->ownerMailList)) {
             Notification::route('mail', $respondent->list->settings->ownerMailList)->notify(new TestFinished($respondentTest));
         }
 

@@ -37,8 +37,8 @@ class RespondentDiscSessionController extends Controller
 
             if(is_null($session)){
                 return $this->outputJSON('', 'Unauthorized', false, 401);
-
             }
+
             $respondent = Respondent::where('email', $session->email)->first();
 
             if(is_null($respondent) || is_null($session)){

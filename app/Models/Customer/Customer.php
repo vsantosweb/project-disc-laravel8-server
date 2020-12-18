@@ -22,7 +22,12 @@ class Customer extends Authenticatable implements JWTSubject
         'uuid',
         'name',
         'email',
-        'password'
+        'password',
+        'document_1',
+        'document_2',
+        'company_name',
+        'company_document',
+        'phone',
     ];
 
     /**
@@ -61,6 +66,11 @@ class Customer extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function address()
+    {
+        return $this->hasOne(CustomerAddress::class);
     }
     public function respondents()
     {
