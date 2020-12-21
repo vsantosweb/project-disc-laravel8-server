@@ -79,7 +79,7 @@ class DiscSessionController extends DiscController
                         foreach ($discRanges->range as $rangeIntensity) {
                             if ($letter == $discRanges->disc->letter) {
                                 if (false !== array_search($value, $rangeIntensity->range)) {
-                                    $profile[] = $discRanges->segment->number;
+                                    $profile[$graphs[$i]['graphName']][] = $discRanges->segment->number;
                                     $intensities[$graphs[$i]['graphName']][] =  $rangeIntensity->intensity;
                                 }
                             }
@@ -93,8 +93,10 @@ class DiscSessionController extends DiscController
 
             return 'Combinação inválida';
         }
+        
+        $code = $profile['difference'][0] . $profile['difference'][1] . $profile['difference'][2] . $profile['difference'][3];
 
-        $combination = DiscCombination::where('code', $profile[0] . $profile[1] . $profile[2] . $profile[3])->with('profile', 'category')->first();
+        $combination = DiscCombination::where('code', $code)->with('profile', 'category')->first();
         $combination->intensities = $intensities;
         $combination->graphs = $request->graphs['items'];
 
