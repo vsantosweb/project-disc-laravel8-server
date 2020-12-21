@@ -89,7 +89,7 @@ class DiscSessionController extends DiscController
             }
         }
 
-        if (count($profile) < 4) {
+        if (count($profile['difference']) < 4) {
 
             return 'Combinação inválida';
         }
