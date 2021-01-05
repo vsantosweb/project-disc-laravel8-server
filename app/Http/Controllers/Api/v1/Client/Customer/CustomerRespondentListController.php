@@ -96,4 +96,17 @@ class CustomerRespondentListController extends Controller
             return $this->outputJSON('', $e->getMessage(), true, 500);
         }
     }
+
+    public function uploadFile(Request $request)
+    {
+        try {
+           
+           $fileUploaded = auth()->user()->respondentLists()->where('uuid', $request->uuid)->first()->uploadFile($request->fileBase64);
+
+            return $this->outputJSON($fileUploaded, '', true, 500);
+
+        } catch (\Exception $e) {
+            return $this->outputJSON('', $e->getMessage(), true, 500);
+        }
+    }
 }
