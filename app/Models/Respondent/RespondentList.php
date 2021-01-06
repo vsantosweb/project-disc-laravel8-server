@@ -28,11 +28,18 @@ class RespondentList extends Model
 
     public function uploadFile($base64File)
     {
-        $fileBin = base64_decode($base64File);
+        try{
+            $fileBin = base64_decode($base64File);
         $fileName = uniqid() . '.xlsx';
         $filePath = auth()->user()->home_dir . DIRECTORY_SEPARATOR . 'temp' . DIRECTORY_SEPARATOR . $fileName;
         Storage::disk('public')->put($filePath, $fileBin);
         $filePath = Storage::disk('public')->path($filePath);
         Excel::import(new ContactsImport($this), $filePath);
+
+        return 'successs';
+        
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
     }
 }
