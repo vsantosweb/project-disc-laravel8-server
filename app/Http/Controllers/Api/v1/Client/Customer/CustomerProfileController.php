@@ -11,7 +11,7 @@ class CustomerProfileController extends Controller
 {
     public function showProfile()
     {
-        return $this->outputJSON(auth()->user()->load('subscription'), 'false', [], 200);
+        return $this->outputJSON(auth()->user()->load('address'), [], false, 200);
     }
 
     public function updateProfile(Request $request)

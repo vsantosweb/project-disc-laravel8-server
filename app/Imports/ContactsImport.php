@@ -60,8 +60,10 @@ class ContactsImport implements ToCollection
             $customValues = array_slice($value->toArray(), count($defaultInserts));
             $newCustomFields = [];
             for ($i = 0; $i < count($customFields); $i++) {
+                
+                $newCustomFields[$i]['name'] = $customFields[$i];
+                $newCustomFields[$i]['key'] = Str::snake( $customFields[$i] );
 
-                $newCustomFields[$i]['name'] = Str::snake( $customFields[$i] );
                 if (is_numeric($customValues[$i])) {
 
                     if ($this->isDate(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($customValues[$i]))) {
