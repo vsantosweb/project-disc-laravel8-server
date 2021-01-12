@@ -35,6 +35,6 @@ class CustomerDiscController extends Controller
         $discTestQuery = isset($request->code) ? $discTestQuery->where('test.code', $request->code) : $discTestQuery;
         $discTestQuery = isset($request->list) ? $discTestQuery->where('respondentLists.uuid', $request->list) : $discTestQuery;
 
-        return $this->outputJSON($discTestQuery->get(), '', false);
+        return $this->outputJSON($discTestQuery->paginate(20), '', false);
     }
 }
