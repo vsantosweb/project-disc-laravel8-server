@@ -55,9 +55,9 @@ class CustomerRespondentListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($uuid)
     {
-        $respondentList = auth()->user()->respondentLists()->findOrFail($id)->with('respondents')->first();
+        $respondentList = auth()->user()->respondentLists()->where('uuid',$uuid)->with('respondents')->first();
         return $this->outputJSON($respondentList, 'Success', false);
     }
 
