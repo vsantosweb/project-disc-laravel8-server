@@ -76,7 +76,6 @@ class DiscSessionController extends DiscController
             foreach ($graphs[$i]['graphLetters'] as $letter => $value) {
                 foreach (DiscRanges::all() as $discRanges) {
                     if ($discRanges->graphType->name == $graphs[$i]['graphName']) {
-                        dd($discRanges->range);
                         foreach ($discRanges->range as $rangeIntensity) {
                             if ($letter == $discRanges->disc->letter) {
                                 if (false !== array_search($value, $rangeIntensity->range)) {
