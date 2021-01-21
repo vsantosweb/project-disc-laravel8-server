@@ -344,7 +344,7 @@ class DiscRangeSeeder extends Seeder
             ['disc_graph_type_id' => 1, 'disc_id' => 1, 'range' => str_replace(["\n", "\r", " "], "", '[
                 {"intensity":28, "range": ' . json_encode(range(0, 1)) . '},
                 {"intensity":27, "range": ' . json_encode(range(2, 2)) . '},
-                {"intensity":26, "range": ' . json_encode(range(3, 3)) . '},
+                {"intensity":26, "range": ' . json_encode(range(3, 3)) . '}
 
             ]'), 'segment_id' => 7],
 
