@@ -31,7 +31,7 @@ class RespondentDiscTest extends Model
 
     public static function makeReport($respondents = [])
     {
-        $respondentTests = RespondentDiscTest::where('was_finished', 0)->get();
+        $respondentTests = RespondentDiscTest::where('was_finished', 1)->get();
 
         $currentGraphs = [];
 
