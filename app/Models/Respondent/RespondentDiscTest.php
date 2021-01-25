@@ -39,7 +39,7 @@ class RespondentDiscTest extends Model
 
             $currentGraphs[] = $test->metadata->graphs;
         }
-        $graphs = empty($currentGraphs) ? $request->graphs['items'] : $currentGraphs;
+        $graphs = $currentGraphs;
 
         for ($i = 0; $i < count($graphs); $i++) {
             for ($j = 0; $j < count($graphs[$i]); $j++) {
@@ -50,8 +50,7 @@ class RespondentDiscTest extends Model
                                 if ($letter == $discRanges->disc->letter) {
                                     if (false !== array_search($value, $rangeIntensity->range)) {
                                         $profile[$i][$graphs[$i][$j]->graphName][] = $discRanges->segment->number;
-                                        $intensities[$i][$graphs[$i][$j]->graphName][] =  $rangeIntensity->intensity;
-                                        $teste[] =  $rangeIntensity;
+                                        $intensities[$i][$graphs[$i][$j]->graphName][] = $rangeIntensity->intensity;
                                     }
                                 }
                             }
@@ -70,7 +69,6 @@ class RespondentDiscTest extends Model
 
             $codes[] = $profile[$i]['difference'][0] . $profile[$i]['difference'][1] . $profile[$i]['difference'][2] . $profile[$i]['difference'][3];
             $combination[$i] = DiscCombination::where('code', $codes[$i])->with('profile', 'category')->first();
-            // $combination[$i] = DiscCombination::where('code', $codes[$i])->first();
 
             $combination[$i]->intensities = json_decode(json_encode($intensities[$i]));
             $combination[$i]->graphs = $currentGraphs[$i];
