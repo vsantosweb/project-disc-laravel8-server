@@ -16,9 +16,9 @@ class ContactsImport implements ToCollection
      * @param Collection $collection
      */
 
-    public function __construct($respondentList)
+    public function __construct($listImport)
     {
-        $this->respondentList = $respondentList;
+        $this->listImport = $listImport;
     }
 
     public function collection(Collection $rows)
@@ -27,6 +27,9 @@ class ContactsImport implements ToCollection
         $customFields = [];
 
         $columFields = $rows[0];
+        
+        $total = [];
+        $updated = $this->updated($rows);
 
         for ($i = 0; $i < count($columFields); $i++) {
 
@@ -48,21 +51,28 @@ class ContactsImport implements ToCollection
                 $defaultInserts[$defaultFields[$i]] =  $value[$i];
             }
 
-            $newRespondent = Respondent::firstOrCreate(
-                [
-                    'uuid' => Str::uuid(),
-                    'customer_id' =>  $this->respondentList->customer_id,
-                    'respondent_list_id' =>  $this->respondentList->id,
-                ],
-                $defaultInserts,
-            );
+            if (filter_var( $defaultInserts['email'], FILTER_VALIDATE_EMAIL)) {
+                
+                $newRespondent = Respondent::updateOrCreate(
+                    ['email' => $defaultInserts['email']],
+                    [
+                        'name' => $defaultInserts['name'],
+                        'uuid' => Str::uuid(),
+                        'customer_id' =>  $this->listImport->respondentList->customer->id,
+                        'respondent_list_id' =>  $this->listImport->respondentList->id,
+                    ]
+                );
 
+                array_push($total, $newRespondent);
+
+            }
+           
             $customValues = array_slice($value->toArray(), count($defaultInserts));
             $newCustomFields = [];
             for ($i = 0; $i < count($customFields); $i++) {
-                
+
                 $newCustomFields[$i]['name'] = $customFields[$i];
-                $newCustomFields[$i]['key'] = Str::snake( $customFields[$i] );
+                $newCustomFields[$i]['key'] = Str::snake($customFields[$i]);
 
                 if (is_numeric($customValues[$i])) {
 
@@ -77,11 +87,22 @@ class ContactsImport implements ToCollection
             }
             $newRespondent->custom_fields = $newCustomFields;
             $newRespondent->save();
+
         }
+
+        $this->listImport->update([
+            'log' => [
+                $this->duplicates($rows),
+                $updated,
+                $this->invalids($rows)
+            ],
+            'status' => 1,
+            'total_items' => count($total)
+        ]);
 
     }
 
-    public function isDate($date, $format = 'd-m-Y')
+    private function isDate($date, $format = 'd-m-Y')
     {
         $d = DateTime::createFromFormat($format, $date->format('d-m-Y'));
 
@@ -90,5 +111,58 @@ class ContactsImport implements ToCollection
         }
 
         return $d->format('Y-m-d');
+    }
+
+    private function duplicates($rows)
+    {
+        $duplicates = [];
+
+        for ($i = 1; $i < count($rows); $i++) {
+            array_push($duplicates, $rows[$i][0]);
+        }
+
+        $duplicatesResult =  array_unique(array_diff_assoc($duplicates, array_unique($duplicates)));
+
+        return [
+            'duplicates' => [
+                'total' => count($duplicatesResult),
+                'items' => $duplicatesResult
+            ]
+        ];
+    }
+
+    private function updated($rows)
+    {
+        $updated = [];
+
+        for ($i = 1; $i < count($rows); $i++) {
+            array_push($updated, $rows[$i][0]);
+        }
+        $respondents = Respondent::whereIn('email', $updated)->pluck('email')->toArray();
+
+        return [
+            'updated' => [
+                'total' => count($respondents),
+                'items' => $respondents
+            ]
+        ];
+    }
+
+    private function invalids($rows)
+    {
+        $invalids = [];
+
+        for ($i = 1; $i < count($rows); $i++) {
+
+            if (!filter_var($rows[$i][0], FILTER_VALIDATE_EMAIL)) {
+                array_push($invalids, $rows[$i][0]);
+            }
+        }
+        return [
+            'invalids' => [
+                'total' => count($invalids),
+                'items' => $invalids
+            ]
+        ];
     }
 }
