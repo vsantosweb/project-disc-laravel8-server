@@ -36,14 +36,14 @@ class RespondentDiscSessionController extends Controller
             $session = RespondentDiscSession::where('token',  $request->query('token'))->first();
 
             if(is_null($session)){
-                return $this->outputJSON('', 'Unauthorized', false, 401);
+                return $this->outputJSON('', 'Unauthorized', true, 401);
             }
 
             $respondent = Respondent::where('email', $session->email)->first();
 
             if(is_null($respondent) || is_null($session)){
 
-                return $this->outputJSON('', 'Unauthorized', false, 401);
+                return $this->outputJSON('', 'Unauthorized', true, 401);
             }
 
             $session->token = Str::random(60);
@@ -51,6 +51,6 @@ class RespondentDiscSessionController extends Controller
 
             return $this->outputJSON('', 'Session closed', false, 200);
         }
-        return $this->outputJSON('', 'Bad Request', true, 401);
+        return $this->outputJSON('', 'Bad Request', true, 400);
     }
 }

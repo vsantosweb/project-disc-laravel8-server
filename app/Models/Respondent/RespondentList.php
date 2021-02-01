@@ -32,9 +32,9 @@ class RespondentList extends Model
         try {
 
             $fileBin = base64_decode($base64File);
-            $fileName = uniqid() . '.csv';
+            $fileName = uniqid() . '.xlsx';
             $filePath = auth()->user()->home_dir . DIRECTORY_SEPARATOR . 'imports' . DIRECTORY_SEPARATOR . $fileName;
-            $pathSize = public_path('storage/'.$filePath);
+            $pathSize = public_path('storage/' . $filePath);
             $fileUrl = Storage::disk('public')->url($filePath);
             Storage::disk('public')->put($filePath, $fileBin);
             $filePath = Storage::disk('public')->path($filePath);
@@ -49,12 +49,11 @@ class RespondentList extends Model
             ]);
 
 
-             Excel::import(new ContactsImport($listImport), $filePath);
+            Excel::import(new ContactsImport($listImport), $filePath);
 
-             return $listImport;
-
+            return $listImport;
         } catch (\Exception $e) {
-            return $e->getMessage();
+            throw new \Exception($e->getMessage(), 1);
         }
     }
 

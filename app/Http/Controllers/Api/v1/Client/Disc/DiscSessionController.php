@@ -93,7 +93,7 @@ class DiscSessionController extends DiscController
 
             return 'Combinação inválida';
         }
-        
+
         $code = $profile['difference'][0] . $profile['difference'][1] . $profile['difference'][2] . $profile['difference'][3];
 
         $combination = DiscCombination::where('code', $code)->with('profile', 'category')->first();

@@ -57,7 +57,7 @@ class CustomerRespondentListController extends Controller
      */
     public function show($uuid)
     {
-        $respondentList = auth()->user()->respondentLists()->where('uuid',$uuid)->with('respondents')->first();
+        $respondentList = auth()->user()->respondentLists()->where('uuid', $uuid)->with('respondents')->first();
         return $this->outputJSON($respondentList, 'Success', false);
     }
 
@@ -102,7 +102,7 @@ class CustomerRespondentListController extends Controller
         try {
 
             $fileUploaded = auth()->user()->respondentLists()->where('uuid', $request->uuid)->firstOrFail()->uploadFile($request->fileBase64);
-            return $this->outputJSON($fileUploaded, 'Success' , false, 201);
+            return $this->outputJSON($fileUploaded, 'Success', false, 201);
             
         } catch (\Exception $e) {
             return $this->outputJSON('', $e->getMessage(), true, 500);

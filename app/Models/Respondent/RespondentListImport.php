@@ -14,6 +14,7 @@ class RespondentListImport extends Model
         'file_path',
         'file_url',
         'total_items',
+        'created_items',
         'status',
         'log',
     ];

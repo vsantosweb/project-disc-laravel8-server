@@ -25,10 +25,15 @@ class ContactsImport implements ToCollection
     {
         $defaultFields = [];
         $customFields = [];
-
         $columFields = $rows[0];
-        
-        $total = [];
+
+        if (str_replace(['-', '_'], '', strtolower($columFields[0])) !== 'email' || $columFields[1] !== 'name') {
+
+            throw new \Exception("Error Processing Request: Invalid layout format", 1);
+        }
+
+        $createdItems = [];
+        $totalItems = [];
         $updated = $this->updated($rows);
 
         for ($i = 0; $i < count($columFields); $i++) {
@@ -50,8 +55,11 @@ class ContactsImport implements ToCollection
             for ($i = 0; $i < count($defaultFields); $i++) {
                 $defaultInserts[$defaultFields[$i]] =  $value[$i];
             }
+            if (filter_var($defaultInserts['email'], FILTER_VALIDATE_EMAIL)) {
 
-            if (filter_var( $defaultInserts['email'], FILTER_VALIDATE_EMAIL)) {
+                if (is_null(Respondent::where('email', $defaultInserts['email'])->first())) {
+                    array_push($createdItems, $defaultInserts['email']);
+                }
                 
                 $newRespondent = Respondent::updateOrCreate(
                     ['email' => $defaultInserts['email']],
@@ -62,11 +70,8 @@ class ContactsImport implements ToCollection
                         'respondent_list_id' =>  $this->listImport->respondentList->id,
                     ]
                 );
-
-                array_push($total, $newRespondent);
-
             }
-           
+
             $customValues = array_slice($value->toArray(), count($defaultInserts));
             $newCustomFields = [];
             for ($i = 0; $i < count($customFields); $i++) {
@@ -87,7 +92,6 @@ class ContactsImport implements ToCollection
             }
             $newRespondent->custom_fields = $newCustomFields;
             $newRespondent->save();
-
         }
 
         $this->listImport->update([
@@ -97,9 +101,9 @@ class ContactsImport implements ToCollection
                 $this->invalids($rows)
             ],
             'status' => 1,
-            'total_items' => count($total)
+            'created_items' => count($createdItems),
+            'total_items' => count($rows)
         ]);
-
     }
 
     private function isDate($date, $format = 'd-m-Y')
@@ -120,13 +124,18 @@ class ContactsImport implements ToCollection
         for ($i = 1; $i < count($rows); $i++) {
             array_push($duplicates, $rows[$i][0]);
         }
-
         $duplicatesResult =  array_unique(array_diff_assoc($duplicates, array_unique($duplicates)));
+
+        $duplicates = [];
+
+        foreach ($duplicatesResult as $result) {
+            $duplicates[] = $result;
+        }
 
         return [
             'duplicates' => [
                 'total' => count($duplicatesResult),
-                'items' => $duplicatesResult
+                'items' => $duplicates
             ]
         ];
     }

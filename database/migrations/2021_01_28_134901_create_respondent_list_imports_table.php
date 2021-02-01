@@ -21,6 +21,7 @@ class CreateRespondentListImportsTable extends Migration
             $table->string('file_path')->nullable();
             $table->string('file_url')->nullable();
             $table->integer('total_items')->nullable();
+            $table->integer('created_items')->nullable();
             $table->tinyInteger('status')->comment('0 Não importado | 1 Finalizado | 2 Pendente | 3 Falha ')->default(2);
             $table->text('log')->nullable();
             $table->timestamps();
