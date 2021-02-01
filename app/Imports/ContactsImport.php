@@ -28,7 +28,7 @@ class ContactsImport implements ToCollection
         $columFields = $rows[0];
 
         if (str_replace(['-', '_'], '', strtolower($columFields[0])) !== 'email' || $columFields[1] !== 'name') {
-
+            $this->listImport->status = 3;
             throw new \Exception("Error Processing Request: Invalid layout format", 1);
         }
 
@@ -60,7 +60,7 @@ class ContactsImport implements ToCollection
                 if (is_null(Respondent::where('email', $defaultInserts['email'])->first())) {
                     array_push($createdItems, $defaultInserts['email']);
                 }
-                
+
                 $newRespondent = Respondent::updateOrCreate(
                     ['email' => $defaultInserts['email']],
                     [
