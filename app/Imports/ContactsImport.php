@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Respondent\Respondent;
+use App\Models\Respondent\RespondentList;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Collection;
@@ -147,8 +148,8 @@ class ContactsImport implements ToCollection
         for ($i = 1; $i < count($rows); $i++) {
             array_push($updated, $rows[$i][0]);
         }
-        $respondents = Respondent::whereIn('email', $updated)->pluck('email')->toArray();
-
+        $respondents = RespondentList::find($this->listImport->respondent_list_id)->respondents()->whereIn('email', $updated)->pluck('email')->toArray();
+       
         return [
             'updated' => [
                 'total' => count($respondents),
