@@ -27,7 +27,7 @@ class ContactsImport implements ToCollection
         $customFields = [];
         $columFields = $rows[0];
 
-        if (str_replace(['-', '_'], '', strtolower($columFields[0])) !== 'email' || $columFields[1] !== 'name') {
+        if (str_replace(['-', '_'], '', strtolower($columFields[0])) !== 'email' || str_replace(['-', '_'], '', strtolower($columFields[1])) !== 'name') {
             $this->listImport->status = 3;
             throw new \Exception("Error Processing Request: Invalid layout format", 1);
         }
