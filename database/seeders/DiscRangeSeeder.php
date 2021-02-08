@@ -232,7 +232,7 @@ class DiscRangeSeeder extends Seeder
             //I maximo
             ['disc_graph_type_id' => 2, 'disc_id' => 2, 'range' => str_replace(["\n", "\r", " "], "", '[
                 {"intensity":28, "range": ' . json_encode(range(15, 28)) . '},
-                {"intensity":27, "range": ' . json_encode(range(14, 15)) . '},
+                {"intensity":27, "range": ' . json_encode(range(13, 14)) . '},
                 {"intensity":26, "range": ' . json_encode(range(12, 12)) . '},
                 {"intensity":25, "range": ' . json_encode(range(11, 11)) . '}
             ]'), 'segment_id' => 7],
