@@ -64,12 +64,12 @@ class ContactsImport implements ToCollection
                 $newRespondent = Respondent::updateOrCreate(
                     [
                         'email' => $defaultInserts['email'],
+                        'respondent_list_id' =>  $this->listImport->respondent_list_id,
                     ],
                     [
                         'name' => $defaultInserts['name'],
                         'uuid' => Str::uuid(),
                         'customer_id' =>  $this->listImport->respondentList->customer->id,
-                        'respondent_list_id' =>  $this->listImport->respondent_list_id,
                     ]
                 );
             }
