@@ -57,18 +57,19 @@ class ContactsImport implements ToCollection
                 $defaultInserts[$defaultFields[$i]] =  $value[$i];
             }
             if (filter_var($defaultInserts['email'], FILTER_VALIDATE_EMAIL)) {
-
-                if (is_null(Respondent::where('email', $defaultInserts['email'])->first())) {
+                if (empty(RespondentList::find($this->listImport->respondent_list_id)->respondents()->where('email', $defaultInserts['email'])->pluck('email')->toArray())) {
                     array_push($createdItems, $defaultInserts['email']);
                 }
 
                 $newRespondent = Respondent::updateOrCreate(
-                    ['email' => $defaultInserts['email']],
+                    [
+                        'email' => $defaultInserts['email'],
+                    ],
                     [
                         'name' => $defaultInserts['name'],
                         'uuid' => Str::uuid(),
                         'customer_id' =>  $this->listImport->respondentList->customer->id,
-                        'respondent_list_id' =>  $this->listImport->respondentList->id,
+                        'respondent_list_id' =>  $this->listImport->respondent_list_id,
                     ]
                 );
             }
@@ -103,7 +104,7 @@ class ContactsImport implements ToCollection
             ],
             'status' => 1,
             'created_items' => count($createdItems),
-            'total_items' => count($rows)
+            'total_items' => count($rows) - 1
         ]);
     }
 
@@ -149,7 +150,7 @@ class ContactsImport implements ToCollection
             array_push($updated, $rows[$i][0]);
         }
         $respondents = RespondentList::find($this->listImport->respondent_list_id)->respondents()->whereIn('email', $updated)->pluck('email')->toArray();
-       
+        // dd($respondents);
         return [
             'updated' => [
                 'total' => count($respondents),
