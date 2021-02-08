@@ -27,13 +27,12 @@ class ContactsImport implements ToCollection
         $customFields = [];
         $columFields = $rows[0];
 
-        if (str_replace(['-', '_'], '', strtolower($columFields[0])) !== 'email' || $columFields[1] !== 'name') {
+        if (str_replace(['-', '_'], '', strtolower($columFields[0])) !== 'email' || str_replace(['-', '_'], '', strtolower($columFields[1])) !== 'name') {
             $this->listImport->status = 3;
             throw new \Exception("Error Processing Request: Invalid layout format", 1);
         }
 
         $createdItems = [];
-        $totalItems = [];
         $updated = $this->updated($rows);
 
         for ($i = 0; $i < count($columFields); $i++) {
@@ -96,8 +95,8 @@ class ContactsImport implements ToCollection
 
         $this->listImport->update([
             'log' => [
-                $this->duplicates($rows),
                 $updated,
+                $this->duplicates($rows),
                 $this->invalids($rows)
             ],
             'status' => 1,
