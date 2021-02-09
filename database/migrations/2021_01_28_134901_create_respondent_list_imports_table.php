@@ -15,6 +15,7 @@ class CreateRespondentListImportsTable extends Migration
     {
         Schema::create('respondent_list_imports', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->unsignedBigInteger('respondent_list_id');
             $table->string('name')->nullable();
             $table->integer('file_size')->nullable();

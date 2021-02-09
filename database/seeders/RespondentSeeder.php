@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Disc\DiscCombination;
+use App\Models\Disc\DiscRanges;
 use App\Models\Respondent\Respondent;
+use App\Models\Respondent\RespondentDiscTest;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -16,6 +19,14 @@ class RespondentSeeder extends Seeder
      */
     public function run()
     {
-        Respondent::factory()->count(1500)->create();
+        // Respondent::factory()->count(10)->create();
+        
+
+        Respondent::factory()->count(2000)->has(RespondentDiscTest::factory()->count(1), 'discTests')->create();
+
+        // Respondent::factory()->count(2)->create()->each(function($respondent){
+        //     $respondentDiscTest = RespondentDiscTest::factory()->count(1)->make();
+        //     $respondent->discTests()->saveMany($respondentDiscTest);
+        // });
     }
 }

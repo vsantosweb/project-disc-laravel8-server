@@ -15,7 +15,7 @@ class CreateRespondentListsTable extends Migration
     {
         Schema::create('respondent_lists', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid');
+            $table->uuid('uuid')->unique();
             $table->unsignedBigInteger('customer_id');
             $table->string('name');
             $table->string('description')->nullable();

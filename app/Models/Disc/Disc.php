@@ -5,6 +5,7 @@ namespace App\Models\Disc;
 use App\Mail\Disc\SendDiscTest;
 use App\Models\Respondent\RespondentDiscSession;
 use App\Models\Respondent\RespondentDiscTest;
+use App\Models\Respondent\RespondentDiscTestMessage;
 use App\Models\Respondent\RespondentList;
 use App\Notifications\DiscTestSessionCreatedNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,15 +25,24 @@ class Disc extends Model
         return $this->hasMany(DiscIntensity::class);
     }
 
-    public function generateTestDiscToList($uuids = [])
+    public function generateTestDiscToList($data)
     {
-        $lists = RespondentList::whereIn('uuid', $uuids)->with('respondents')->get();
+        $lists = RespondentList::whereIn('uuid', $data->respondent_lists)->with('respondents')->get();
+        
+        RespondentDiscTestMessage::create([
+            'customer_id' => auth()->user()->id,
+            'name' => $data->name,
+            'subject' => $data->subject,
+            'content' => $data->content,
+            'respondent_lists'=> $data->respondent_lists,
+            'sender_name' => auth()->user()->name
+        ]);
 
         foreach ($lists as $list) {
 
             if($list->respondents->isEmpty()){
 
-                throw new \Exception('Sem itens na lista', 1);
+                throw new \Exception('Sem itens na lista '. $list, 1);
             }
 
             foreach ($list->respondents as $respondent) {
@@ -45,7 +55,7 @@ class Disc extends Model
                 $discTest = RespondentDiscTest::firstOrCreate([
                     'respondent_id' => $respondent->id,
                     'code' => Str::random(15),
-                    'metadata'=> 'asdasd'
+                    'metadata'=> ''
                 ]);
 
                 $session->session_url = env('APP_URL') .
@@ -60,6 +70,7 @@ class Disc extends Model
                 $respondent->session = $session;
                 $respondent->notify(new DiscTestSessionCreatedNotification($respondent));
             }
+            
         }
         return $sessions;
     }

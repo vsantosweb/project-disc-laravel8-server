@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDiscTestMessagesTable extends Migration
+class CreateRespondentDiscTestMessagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateDiscTestMessagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('disc_test_messages', function (Blueprint $table) {
+        Schema::create('respondent_disc_test_messages', function (Blueprint $table) {
             $table->id();
-            $table->string('uuid');
+            $table->uuid('uuid')->unique();
             $table->unsignedBigInteger('customer_id');
             $table->string('name');
             $table->string('subject');
             $table->string('sender_name');
             $table->text('content');
+            $table->text('respondent_lists')->nullable();
             $table->text('report')->nullable();
             $table->text('bounce')->nullable();
             $table->timestamps();
@@ -36,6 +37,6 @@ class CreateDiscTestMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('disc_test_messages');
+        Schema::dropIfExists('respondent_disc_test_messages');
     }
 }

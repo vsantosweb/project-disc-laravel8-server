@@ -17,7 +17,7 @@ class CreateCustomersTable extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
             $table->string('name');
-            $table->string('email');
+            $table->string('email', 100)->unique();
             $table->string('password');
             $table->string('document_1')->nullable();
             $table->string('document_2')->nullable();

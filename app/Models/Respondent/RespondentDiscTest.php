@@ -29,6 +29,11 @@ class RespondentDiscTest extends Model
         return $this->belongsTo(Respondent::class);
     }
 
+    public function respondenetDiscTestMessage()
+    {
+        return $this->belongsTo(RespondentDiscTestMessage::class);
+    }
+    
     public static function makeReport($respondents = [])
     {
         $respondentTests = RespondentDiscTest::where('was_finished', 1)->get();

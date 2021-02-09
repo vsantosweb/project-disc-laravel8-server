@@ -25,6 +25,7 @@ class RespondentFactory extends Factory
         return [
             'name' => $this->faker->name,
             'customer_id' => 1,
+            'respondent_list_id' => 1,
             'email' => $this->faker->unique()->safeEmail,
             'uuid' => Str::uuid()
         ];

@@ -13,10 +13,11 @@ class CustomerDiscController extends Controller
 {
     public function create(Request $request)
     {
+       return $request->all();
         $disc = new Disc;
 
         try {
-            return $this->outputJSON($disc->generateTestDiscToList($request->respondent_lists), 'Envio para listas realizado com sucesso!', false, 200);
+            return $this->outputJSON($disc->generateTestDiscToList($request->all()), 'Envio para listas realizado com sucesso!', false, 200);
         } catch (\Exception $e) {
             return $this->outputJSON('', $e->getMessage(), false, 400);
         }
