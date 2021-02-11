@@ -20,10 +20,12 @@ class CustomerSeeder extends Seeder
             [
                 'name'=> 'john doe',
                 'uuid' => Str::uuid(),
+                'customer_type_id' => 1,
                 'email'=> 'souzavito@hotmail.com',
                 'password'=> Hash::make('password'),
                 'email_verified_at'=> now(),
-                'home_dir' => 'customers/'. md5(microtime())
+                'home_dir' => 'customers/'. md5(microtime()),
+                'last_activity' => now()
             ],
         ]);
     }

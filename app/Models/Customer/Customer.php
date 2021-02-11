@@ -28,6 +28,11 @@ class Customer extends Authenticatable implements JWTSubject
         'company_name',
         'company_document',
         'phone',
+        'customer_type_id',
+        'notify',
+        'newsletter',
+        'last_activity',
+        'email_verified_at'
     ];
 
     /**
@@ -85,5 +90,10 @@ class Customer extends Authenticatable implements JWTSubject
     public function respondentCustomFields()
     {
         return $this->hasMany(RespondentCustomField::class);
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(CustomerType::class, 'customer_type_id');
     }
 }

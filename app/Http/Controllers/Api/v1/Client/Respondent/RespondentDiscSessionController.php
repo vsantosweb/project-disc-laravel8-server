@@ -13,9 +13,9 @@ class RespondentDiscSessionController extends Controller
 {
     public function hashLogged(Request $request)
     {
+        dd(session_id());
 
-        $location =  \Location::get('45.166.9.160');
-
+        $location =  \Location::get($request->ip());
         $session = RespondentDiscSession::where('token',  $request->query('token'))->first();
 
         if (is_null($session)) {
@@ -26,7 +26,7 @@ class RespondentDiscSessionController extends Controller
             'ip' => $request->ip(),
             'user_agent' => $request->userAgent(),
             'active' => true,
-            'geolocation' => $location->longitude .', ' . $location->latitude,
+            'geolocation' => !$location ? 'Not Avaiable' : $location->longitude .', ' . $location->latitude,
         ]);
         
         return $this->outputJSON($session->with('respondent')->get(), '', false, 200);
@@ -34,7 +34,7 @@ class RespondentDiscSessionController extends Controller
 
     public function hashLogout(Request $request)
     {
-        $location =  \Location::get('45.166.9.160');
+        $location =  \Location::get($request->ip());
 
         $session = RespondentDiscSession::where('token',  $request->query('token'))->first();
 
@@ -47,10 +47,10 @@ class RespondentDiscSessionController extends Controller
             'user_agent' => $request->userAgent(),
             'active' => false,
             'was_finished' => true,
-            'geolocation' => $location->longitude .', ' . $location->latitude,
+            'geolocation' => !$location ? 'Not Avaiable' : $location->longitude .', ' . $location->latitude,
         ]);
         
-        return $this->outputJSON($session->with('respondent')->first(), '', false, 200);
+        return $this->outputJSON([], 'Session closed', false, 200);
 
     }
 }

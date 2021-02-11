@@ -36,6 +36,7 @@ class CustomerAuthController extends Controller
     }
     public function logged()
     {
+        auth()->user()->update(['last_activity' => now()]);
         return $this->outputJSON(auth()->user(),'', false, 200);
     }
 

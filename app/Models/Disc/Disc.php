@@ -73,7 +73,7 @@ class Disc extends Model
 
                 $sessions[] = $session;
                 $respondent->session = $session;
-                // $respondent->notify(new DiscTestSessionCreatedNotification($respondent));
+                $respondent->notify(new DiscTestSessionCreatedNotification($respondent));
             }
 
             $message->lists()->attach($list->id);

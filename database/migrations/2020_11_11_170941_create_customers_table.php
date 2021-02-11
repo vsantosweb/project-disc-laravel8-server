@@ -16,6 +16,7 @@ class CreateCustomersTable extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
+            $table->unsignedBigInteger('customer_type_id');
             $table->string('name');
             $table->string('email', 100)->unique();
             $table->string('password');
@@ -26,9 +27,14 @@ class CreateCustomersTable extends Migration
             $table->string('phone')->nullable();
             $table->string('gender')->nullable();
             $table->string('status')->default(1);
+            $table->string('notify')->default(0);
+            $table->string('newsletter')->default(0);
             $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('last_activity')->nullable();
             $table->string('home_dir')->nullable();
             $table->timestamps();
+
+            $table->foreign('customer_type_id')->references('id')->on('customer_types');
         });
     }
 
