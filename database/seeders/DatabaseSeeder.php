@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             DiscSeeder::class,
             DiscSeeder::class,
-            DiscSessionSeeder::class,
             CustomerSeeder::class,
             DiscSegmentSeeder::class,
             DiscGraphTypesSeeder::class,

@@ -10,7 +10,7 @@ class RespondentDiscSession extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['email', 'token', 'email', 'session_url'];
+    protected $fillable = ['email', 'token', 'email', 'session_url', 'was_finished', 'active', 'user_agent', 'geolocation', 'expire_at', 'ip'];
     protected $hidden = ['updated_at', 'created_at', 'id'];
 
     public function createToken($respondent)
@@ -22,6 +22,11 @@ class RespondentDiscSession extends Model
 
         $token->uuid = $respondent->uuid;
         return $token;
+    }
+
+    public function respondent()
+    {
+        return $this->belongsTo(Respondent::class, 'email', 'email');
     }
 
     public function checkSessionToken($token, $uuid)

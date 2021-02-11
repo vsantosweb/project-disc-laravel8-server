@@ -66,4 +66,16 @@ class Respondent extends Model
     {
         return $this->belongsTo(RespondentList::class, 'respondent_list_id');
     }
+
+    public function messages()
+    {
+        return $this->belongsToMany(RespondentDiscMessage::class, 'respondent_disc_tests');
+
+    }
+
+    public function discSessions()
+    {
+        return $this->hasMany(RespondentDiscSession::class, 'email', 'email');
+    }
+ 
 }

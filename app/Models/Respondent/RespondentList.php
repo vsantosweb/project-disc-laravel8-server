@@ -26,6 +26,11 @@ class RespondentList extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+   
+    public function messages()
+    {
+        return $this->belongsToMany(RespondentDiscMessage::class, 'respondent_lists_to_messages');
+    }
 
     public function uploadFile($base64File)
     {

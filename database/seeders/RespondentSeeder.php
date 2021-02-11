@@ -19,14 +19,6 @@ class RespondentSeeder extends Seeder
      */
     public function run()
     {
-        // Respondent::factory()->count(10)->create();
-        
-
-        Respondent::factory()->count(2000)->has(RespondentDiscTest::factory()->count(1), 'discTests')->create();
-
-        // Respondent::factory()->count(2)->create()->each(function($respondent){
-        //     $respondentDiscTest = RespondentDiscTest::factory()->count(1)->make();
-        //     $respondent->discTests()->saveMany($respondentDiscTest);
-        // });
+        // Respondent::factory()->count(2000)->has(RespondentDiscTest::factory()->count(1), 'discTests')->create();
     }
 }

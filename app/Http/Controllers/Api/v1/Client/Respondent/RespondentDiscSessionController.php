@@ -13,44 +13,44 @@ class RespondentDiscSessionController extends Controller
 {
     public function hashLogged(Request $request)
     {
-        if(!is_null($request->query('token')) && !is_null($request->query('uuid'))){
 
-            $session = RespondentDiscSession::where('token',  $request->query('token'))->first();
-            $respondent = Respondent::where('email', $session->email)->first();
+        $location =  \Location::get('45.166.9.160');
 
-            if(is_null($respondent) || is_null($session)){
+        $session = RespondentDiscSession::where('token',  $request->query('token'))->first();
 
-                return $this->outputJSON('', 'Unauthorized', false, 401);
-            }
-
-            return $this->outputJSON($respondent, '', false, 200);
+        if (is_null($session)) {
+            return $this->outputJSON([], 'Invalid session', false, 401);
         }
 
-        return $this->outputJSON('', 'Bad Request', true, 401);
+        $session->update([
+            'ip' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'active' => true,
+            'geolocation' => $location->longitude .', ' . $location->latitude,
+        ]);
+        
+        return $this->outputJSON($session->with('respondent')->get(), '', false, 200);
     }
 
     public function hashLogout(Request $request)
     {
-        if(!is_null($request->query('token')) && !is_null($request->query('uuid'))){
+        $location =  \Location::get('45.166.9.160');
 
-            $session = RespondentDiscSession::where('token',  $request->query('token'))->first();
+        $session = RespondentDiscSession::where('token',  $request->query('token'))->first();
 
-            if(is_null($session)){
-                return $this->outputJSON('', 'Unauthorized', true, 401);
-            }
-
-            $respondent = Respondent::where('email', $session->email)->first();
-
-            if(is_null($respondent) || is_null($session)){
-
-                return $this->outputJSON('', 'Unauthorized', true, 401);
-            }
-
-            $session->token = Str::random(60);
-            $session->save();
-
-            return $this->outputJSON('', 'Session closed', false, 200);
+        if (is_null($session)) {
+            return $this->outputJSON([], 'Invalid session', false, 401);
         }
-        return $this->outputJSON('', 'Bad Request', true, 400);
+
+        $session->update([
+            'token' => Str::random(60),
+            'user_agent' => $request->userAgent(),
+            'active' => false,
+            'was_finished' => true,
+            'geolocation' => $location->longitude .', ' . $location->latitude,
+        ]);
+        
+        return $this->outputJSON($session->with('respondent')->first(), '', false, 200);
+
     }
 }
