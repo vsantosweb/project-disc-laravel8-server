@@ -11,6 +11,7 @@ use App\Models\Disc\DiscRanges;
 use App\Models\Respondent\Respondent;
 use App\Models\Respondent\RespondentDemograph;
 use App\Models\Respondent\RespondentDemographic;
+use App\Models\Respondent\RespondentDiscSession;
 use App\Models\Respondent\RespondentDiscTest;
 use App\Notifications\TestFinished;
 use Illuminate\Http\Request;
@@ -22,55 +23,28 @@ class DiscSessionController extends DiscController
     public function start(Request $request)
     {
 
-        // return $sesion->createToken(Customer::find(1));
+        $respondentDiscSession = RespondentDiscSession::where('token', $request->token)->with('respondent')->firstOrFail();
 
-        $newDiscSession =  $this->discSession->firstOrCreate([
-            'uuid' => Str::uuid(),
-            'expire_at' => now()->addMinutes(60),
-            'has_finished' => 0,
+        $respondentDiscSession->update([
             'active' => 1,
+            'ip' => $request->ip(),
+            'user_agent' => $request->userAgent()
         ]);
 
-        $newDiscSession->graph()->create([
-            'uuid' => Str::uuid(),
-            'graphs' => json_decode(str_replace(array("\r", "\n", " "), "", '{
-                "items": [{
-                        "graphName": "less",
-                        "graphLetters": {
-                            "D": ' . 0 . ',
-                            "I":' . 0 . ',
-                            "S": ' . 0 . ',
-                            "C": ' . 0 . '
-                        }
-                    },
-                    {
-                        "graphName": "more",
-                        "graphLetters": {
-                            "D": ' . 0 . ',
-                            "I":' . 0 . ',
-                            "S": ' . 0 . ',
-                            "C": ' . 0 . '
-                        }
-                    },
-                    {
-                        "graphName": "difference",
-                        "graphLetters": {
-                            "D": ' . 0 . ',
-                            "I":' . 0 . ',
-                            "S": ' . 0 . ',
-                            "C": ' . 0 . '
-                        }
-                    }
-                ]
-            }'))
-        ]);
 
-        return $this->outputJSON($newDiscSession->with('graph')->find($newDiscSession->id), '', false);
+        if (is_null($respondentDiscSession)) {
+
+            return $this->outputJSON([], 'Invalid session', true, 401);
+        }
+
+        $respondentDiscSession->update(['active' => true]);
+
+        return $this->outputJSON($respondentDiscSession, '', false);
     }
 
     public function finish(Request $request)
     {
-        $graphs = $request->graphs['items'];
+        $graphs = $request->graphs;
 
         for ($i = 0; $i < count($graphs); $i++) {
             foreach ($graphs[$i]['graphLetters'] as $letter => $value) {
@@ -98,7 +72,7 @@ class DiscSessionController extends DiscController
 
         $combination = DiscCombination::where('code', $code)->with('profile', 'category')->first();
         $combination->intensities = $intensities;
-        $combination->graphs = $request->graphs['items'];
+        $combination->graphs = $request->graphs;
 
         if ($combination->disc_profile_id == 3 || $combination->disc_profile_id == 4 || $combination->disc_profile_id == 5) {
             return $this->outputJSON('Desvio', '', true, 200);
@@ -111,7 +85,18 @@ class DiscSessionController extends DiscController
         $respondentTest->update([
             'metadata' => $combination,
             'was_finished' => 1,
-            'ip' => $request->ip()
+            'ip' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+        ]);
+
+        $respondentDiscSession = RespondentDiscSession::where('token', $request->token)->first();
+
+        $respondentDiscSession->update([
+            'active' => 0,
+            'was_finished' => 1,
+            'ip' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'token' => Str::random(60)
         ]);
 
         if ($request->demographic_data) {

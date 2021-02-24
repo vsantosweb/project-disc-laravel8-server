@@ -10,9 +10,10 @@ class RespondentDiscSession extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['email', 'token', 'email', 'session_url', 'was_finished', 'active', 'user_agent', 'geolocation', 'expire_at', 'ip'];
+    protected $fillable = ['email', 'token', 'email', 'session_url', 'was_finished', 'session_data', 'active', 'user_agent', 'geolocation', 'expire_at', 'ip'];
     protected $hidden = ['updated_at', 'created_at', 'id'];
-
+    protected $casts = ['session_data' => 'object'];
+    
     public function createToken($respondent)
     {
         $token = $this->create([

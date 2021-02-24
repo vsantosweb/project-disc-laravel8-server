@@ -51,16 +51,19 @@ class Disc extends Model
 
             foreach ($list->respondents as $respondent) {
 
-                $session =  RespondentDiscSession::firstOrCreate([
-                    'token' => hash('sha256', microtime()),
-                    'email' => $respondent->email,
-                ]);
+                
 
                 $discTest = RespondentDiscTest::firstOrCreate([
                     'respondent_id' => $respondent->id,
                     'respondent_disc_message_id' => $message->id,
                     'code' => Str::random(15),
                     'metadata' => ''
+                ]);
+                
+                $session =  RespondentDiscSession::firstOrCreate([
+                    'token' => hash('sha256', microtime()),
+                    'email' => $respondent->email,
+                    'session_data' => json_decode('{"disc_code":"'.$discTest->code.'","items":[{"graphName":"less","graphLetters":{"D":0,"I":0,"S":0,"C":0}},{"graphName":"more","graphLetters":{"D":0,"I":0,"S":0,"C":0}},{"graphName":"difference","graphLetters":{"D":0,"I":0,"S":0,"C":0}}]}', TRUE)
                 ]);
 
                 $session->session_url = env('APP_URL') .
@@ -73,7 +76,7 @@ class Disc extends Model
 
                 $sessions[] = $session;
                 $respondent->session = $session;
-                $respondent->notify(new DiscTestSessionCreatedNotification($respondent));
+                // $respondent->notify(new DiscTestSessionCreatedNotification($respondent));
             }
 
             $message->lists()->attach($list->id);

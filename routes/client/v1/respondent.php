@@ -27,7 +27,7 @@ Route::prefix('respondent')->namespace('Api\v1\Client\Respondent')->group(functi
     });
 
     Route::prefix('session')->group(function () {
-        Route::get('hash-login', 'RespondentDiscSessionController@hashLogged');
+        Route::get('/{token}', 'RespondentDiscSessionController@checkSession');
         Route::post('shutdown', 'RespondentDiscSessionController@hashLogout');
     });
 

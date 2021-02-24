@@ -2,6 +2,7 @@
 
 namespace App\Models\Customer;
 
+use App\Models\Disc\DiscPlanSubscription;
 use App\Models\Respondent\Respondent;
 use App\Models\Respondent\RespondentCustomField;
 use App\Models\Respondent\RespondentList;
@@ -77,6 +78,11 @@ class Customer extends Authenticatable implements JWTSubject
     {
         return $this->hasOne(CustomerAddress::class);
     }
+    public function subscription()
+    {
+        return $this->hasOne(DiscPlanSubscription::class);
+    }
+
     public function respondents()
     {
         return $this->hasMany(Respondent::class);

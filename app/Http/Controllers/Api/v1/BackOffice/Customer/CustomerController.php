@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\v1\BackOffice\Customer;
 use App\Http\Controllers\Controller;
 use App\Models\Customer\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class CustomerController extends Controller
 {
@@ -12,6 +14,7 @@ class CustomerController extends Controller
     {
         $this->customer = $customer;
     }
+    
     /**
      * Display a listing of the resource.
      *
@@ -30,7 +33,34 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+
+            $newCustomer = $this->customer->fisrtOrCreate([
+                'uuid' => Str::uuid(),
+                'password' => Hash::make($request->password),
+            ],[
+                
+                'uuid' => Str::uuid(),
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'document_1' => $request->document_1,
+                'document_2' => $request->document_2,
+                'company_name' => $request->company_name,
+                'company_document' => $request->company_document,
+                'phone' => $request->phone,
+                'customer_type_id' => $request->customer_type_id,
+                'notify' =>  $request->notify,
+                'newsletter' => $request->newsletter,
+                'email_verified_at' => now()
+            ]);
+
+            return $this->outputJSON($newCustomer, 'Success', false, 201);
+
+        } catch (\Throwable $th) {
+
+            return $this->outputJSON([], $th, true, 500);
+        }
     }
 
     /**
@@ -72,5 +102,4 @@ class CustomerController extends Controller
 
         return $this->customer->where('last_activity', '>', now()->subMinutes(5)->format('Y-m-d H:i:s'))->get();
     }
-    
 }
