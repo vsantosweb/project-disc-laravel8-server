@@ -13,7 +13,13 @@ class CustomerDiscController extends Controller
 {
     public function create(Request $request)
     {
-        
+
+        $subscription =  auth()->user()->subscription;
+
+        if (!$subscription->checkCreditAvaiable()) {
+            return $this->outputJSON([], 'No credits Avaiable', false);
+        }
+
         $disc = new Disc;
 
         try {

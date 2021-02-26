@@ -13,14 +13,11 @@ class DiscPlanSubscription extends Model
     protected $fillable = [
         'code',
         'customer_id',
-        'name',
-        'slug',
         'status',
         'amount',
         'validity_days',
         'expire_at',
-        'features',
-        'description',
+        'credits',
     ];
 
     protected $casts = ['features' => 'object'];
@@ -28,5 +25,27 @@ class DiscPlanSubscription extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function plan()
+    {
+        return $this->belongsTo(DiscPlan::class, 'disc_plan_id')->with('periods');
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany(DiscPlanSubscriptionInvoice::class, 'plan_subscription_id');
+    }
+
+    public function checkCreditAvaiable()
+    {
+        return $this->credits > 0 ? true : false;
+    }
+
+    public function dispatchCreditConsummation($respondents)
+    {
+        $this->credits -= count($respondents);
+        $this->total_usage += count($respondents);
+        $this->save();
     }
 }

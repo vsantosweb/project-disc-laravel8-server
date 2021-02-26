@@ -15,18 +15,19 @@ class CreateDiscPlanSubscriptionsTable extends Migration
     {
         Schema::create('disc_plan_subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('customer_id');
             $table->string('code', 60)->unique();
-            $table->string('name');
-            $table->string('slug');
+            $table->unsignedBigInteger('customer_id');
+            $table->unsignedBigInteger('disc_plan_id');
+            $table->integer('credits')->default(0);
+            $table->integer('additionals_credits')->default(0);
+            $table->integer('total_usage')->default(0);
             $table->tinyInteger('status');
             $table->double('amount');
             $table->integer('validity_days');
             $table->timestamp('expire_at');
-            $table->text('features');
-            $table->text('description')->nullable();
             $table->timestamps();
 
+            $table->foreign('disc_plan_id')->references('id')->on('customers')->onDelete('cascade');
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
         });
     }

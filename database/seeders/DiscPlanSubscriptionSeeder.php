@@ -18,14 +18,12 @@ class DiscPlanSubscriptionSeeder extends Seeder
         DB::table('disc_plan_subscriptions')->insert([
             'code' => strtoupper(uniqid()),
             'customer_id' => 1,
-            'name' => 'Free',
-            'slug' => 'free',
+            'disc_plan_id' => 1,
             'status' => 1,
-            'amount' => 0,
-            'validity_days' => 30,
+            'credits' => DiscPlan::find(1)->features->credits,
+            'amount' => DiscPlan::find(1)->price,
+            'validity_days' => DiscPlan::find(1)->periods[0]->validity_days,
             'expire_at' => now()->addDays(30),
-            'features' => json_encode(DiscPlan::find(1)->features),
-            'description' => DiscPlan::find(1)->description,
         ]);
     }
 }

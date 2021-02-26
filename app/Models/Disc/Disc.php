@@ -26,61 +26,55 @@ class Disc extends Model
 
     public function generateTestDiscToList($data)
     {
-        $lists = RespondentList::whereIn('uuid', $data->respondent_lists)->with('respondents')->get();
-        
+        // $lists = RespondentList::whereIn('uuid', $data->respondent_lists )->with('respondents')->get();
+        //testing
+        $lists = RespondentList::all();
 
-        if($lists->isEmpty()){
+        if ($lists->isEmpty()) {
             throw new \Exception('No registered lists');
         }
-      $message =  RespondentDiscMessage::create([
+
+        $respondents = [];
+
+        foreach ($lists as $list) {
+            
+            foreach ($list->respondents as $respondent) array_push($respondents, $respondent);
+        }
+
+        if (auth()->user()->subscription->credits < count($respondents)) {
+
+            throw new \Exception('Insufficient credit balance');
+        }
+
+        $message = RespondentDiscMessage::create([
             'uuid' => Str::uuid(),
             'customer_id' => auth()->user()->id,
             'name' => $data->name,
             'subject' => $data->subject,
             'content' => $data->content,
-            'respondent_lists' => json_encode($data->respondent_lists),
             'sender_name' => auth()->user()->name
         ]);
 
-        foreach ($lists as $list) {
+        foreach ($lists as $list) $message->lists()->attach($list->id);
 
-            if ($list->respondents->isEmpty()) {
+        foreach ($respondents as $respondent) {
 
-                throw new \Exception('No respondents on the list: ' . $list->name, 1);
-            }
+            $discTest = $respondent->discTests()->create([
+                'respondent_disc_test_message_id' => $message->id,
+                'code' => Str::random(15),
+            ]);
+            
+            $token = hash('sha256', microtime());
 
-            foreach ($list->respondents as $respondent) {
-
-                
-
-                $discTest = RespondentDiscTest::firstOrCreate([
-                    'respondent_id' => $respondent->id,
-                    'respondent_disc_message_id' => $message->id,
-                    'code' => Str::random(15),
-                    'metadata' => ''
-                ]);
-                
-                $session =  RespondentDiscSession::firstOrCreate([
-                    'token' => hash('sha256', microtime()),
-                    'email' => $respondent->email,
-                    'session_data' => json_decode('{"disc_code":"'.$discTest->code.'","items":[{"graphName":"less","graphLetters":{"D":0,"I":0,"S":0,"C":0}},{"graphName":"more","graphLetters":{"D":0,"I":0,"S":0,"C":0}},{"graphName":"difference","graphLetters":{"D":0,"I":0,"S":0,"C":0}}]}', TRUE)
-                ]);
-
-                $session->session_url = env('APP_URL') .
-                    DIRECTORY_SEPARATOR .
-                    'authDisc' . DIRECTORY_SEPARATOR .
-                    $session->token . DIRECTORY_SEPARATOR .
-                    $respondent->uuid . DIRECTORY_SEPARATOR .
-                    $discTest->code;
-                $session->save();
-
-                $sessions[] = $session;
-                $respondent->session = $session;
-                // $respondent->notify(new DiscTestSessionCreatedNotification($respondent));
-            }
-
-            $message->lists()->attach($list->id);
+            $respondent->discSessions()->create([
+                'token' => $token,
+                'email' => $respondent->email,
+                'session_url' => env('APP_URL') . DIRECTORY_SEPARATOR .  $token  . DIRECTORY_SEPARATOR . $discTest->code,
+                'session_data' => json_decode('{"disc_code":"' . $discTest->code . '","items":[{"graphName":"less","graphLetters":{"D":0,"I":0,"S":0,"C":0}},{"graphName":"more","graphLetters":{"D":0,"I":0,"S":0,"C":0}},{"graphName":"difference","graphLetters":{"D":0,"I":0,"S":0,"C":0}}]}', TRUE)
+            ]);
         }
-        return $sessions;
+
+        auth()->user()->subscription->dispatchCreditConsummation($respondents);
+        dd(count($respondents));
     }
 }

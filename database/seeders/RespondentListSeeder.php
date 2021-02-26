@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Respondent\RespondentList;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -15,10 +16,6 @@ class RespondentListSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('respondent_lists')->insert([
-            'uuid' => Str::uuid(),
-            'customer_id' => 1,
-            'name' => 'Lista 1',
-        ]);
+        RespondentList::factory()->count(15)->create();
     }
 }

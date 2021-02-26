@@ -15,7 +15,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             DiscSeeder::class,
-            DiscSeeder::class,
             CustomerTypeSeeder::class,
             CustomerSeeder::class,
             DiscSegmentSeeder::class,
@@ -25,7 +24,12 @@ class DatabaseSeeder extends Seeder
             RespondentSeeder::class,
             DiscPlanSeeder::class,
             DiscPlanPeriodSeeder::class,
-            DiscPlanSubscriptionSeeder::class
+            DiscPlanSubscriptionSeeder::class,
+            DiscPlanSubscriptionInvoice::class,
+            OrderStatusSeeder::class,
+            OrderSeeder::class,
+            DiscPlanOrder::class,
+            RespondentDiscMessages::class
             // DiscProfileSeeder::class,
             // DiscCategorySeeder::class
 

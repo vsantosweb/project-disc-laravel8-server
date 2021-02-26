@@ -21,7 +21,6 @@ class CreateRespondentDiscMessagesTable extends Migration
             $table->string('subject');
             $table->string('sender_name');
             $table->text('content');
-            $table->string('respondent_lists')->nullable();
             $table->text('report')->nullable();
             $table->text('bounce')->nullable();
             $table->timestamps();

@@ -33,6 +33,7 @@ class CreateCustomersTable extends Migration
             $table->timestamp('last_activity')->nullable();
             $table->string('home_dir')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('customer_type_id')->references('id')->on('customer_types');
         });

@@ -17,6 +17,7 @@ class DiscPlan extends Model
         'features',
         'description',
         'showcase',
+        'joing_free'
     ];
 
     protected $casts = ['features' => 'object'];
@@ -24,5 +25,15 @@ class DiscPlan extends Model
     public function periods()
     {
         return $this->belongsToMany(DiscPlanPeriod::class, 'disc_plan_to_periods')->withPivot('discount', 'showcase');
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(DiscPlanSubscription::class)->with('customer');
+    }
+
+    public function order()
+    {
+        return $this->hasMany(DiscPlanOrder::class)->with('order');
     }
 }

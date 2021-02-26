@@ -17,22 +17,21 @@ Route::prefix('customer')->namespace('Api\v1\Client\Customer')->group(function (
     Route::prefix('auth')->namespace('Auth')->group(function () {
 
         Route::post('login', 'CustomerAuthController@login');
+        Route::post('register', 'CustomerRegisterController@register');
 
         Route::middleware('auth:customer')->group(function () {
             Route::post('logout', 'CustomerAuthController@logout');
             Route::get('logged', 'CustomerAuthController@logged');
         });
-
     });
 
     Route::middleware('auth:customer')->group(function () {
 
-        Route::prefix('profile')->group(function(){
+        Route::prefix('profile')->group(function () {
 
             Route::get('show', 'CustomerProfileController@showProfile');
             Route::patch('update', 'CustomerProfileController@updateProfile');
             Route::put('change-password', 'CustomerProfileController@changePassword');
-
         });
 
         Route::resource('respondents', 'CustomerRespondentController');
@@ -41,9 +40,8 @@ Route::prefix('customer')->namespace('Api\v1\Client\Customer')->group(function (
         Route::post('create-disc', 'CustomerDiscController@create');
         Route::get('filter', 'CustomerDiscController@filter');
 
-        Route::prefix('settings')->group(function(){
+        Route::prefix('settings')->group(function () {
             Route::resource('custom-fields', 'CustomerRespondentCustomFieldController');
         });
     });
-
 });

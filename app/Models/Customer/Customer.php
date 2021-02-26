@@ -2,7 +2,9 @@
 
 namespace App\Models\Customer;
 
+use App\Models\Disc\DiscPlan;
 use App\Models\Disc\DiscPlanSubscription;
+use App\Models\Order\Order;
 use App\Models\Respondent\Respondent;
 use App\Models\Respondent\RespondentCustomField;
 use App\Models\Respondent\RespondentList;
@@ -10,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Support\Str;
 
 class Customer extends Authenticatable implements JWTSubject
 {
@@ -80,7 +83,7 @@ class Customer extends Authenticatable implements JWTSubject
     }
     public function subscription()
     {
-        return $this->hasOne(DiscPlanSubscription::class);
+        return $this->hasOne(DiscPlanSubscription::class)->with('plan');
     }
 
     public function respondents()
@@ -102,4 +105,10 @@ class Customer extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo(CustomerType::class, 'customer_type_id');
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class)->with('discPlanOrder')->with('status');
+    }
+
 }

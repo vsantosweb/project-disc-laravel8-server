@@ -22,7 +22,9 @@ class CreateDiscPlansTable extends Migration
             $table->text('features');
             $table->text('description')->nullable();
             $table->tinyInteger('showcase')->default(0);
+            $table->tinyInteger('joing_free')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -16,7 +16,7 @@ class RespondentDiscTest extends Model
         'respondent_id',
         'code',
         'metadata',
-        'respondent_disc_message_id',
+        'respondent_disc_test_message_id',
         'ip',
         'geolocation',
         'was_finished',

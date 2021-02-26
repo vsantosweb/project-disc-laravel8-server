@@ -19,7 +19,9 @@ class CreateOrdersTable extends Migration
             $table->string('code', 60)->unique();
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('order_status_id');
+            $table->string('status')->nullable();
             $table->string('payment_method');
+            $table->string('type')->nullable();
             $table->double('total');
             $table->string('user_agent')->nullable();
             $table->string('ip')->nullable();
@@ -27,6 +29,8 @@ class CreateOrdersTable extends Migration
             $table->timestamps();
 
             $table->foreign('order_status_id')->references('id')->on('order_status');
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+
         });
     }
 

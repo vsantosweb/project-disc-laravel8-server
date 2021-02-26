@@ -22,6 +22,7 @@ class DiscPlanSeeder extends Seeder
                 'name' => 'Free',
                 'slug' =>  Str::slug('free'),
                 'price' => 0.00,
+                'joing_free' => 1,
                 'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
                 'showcase' => 1,
                 'features' => json_decode(json_encode(str_replace(array("\r", "\n", " "), "", '{
@@ -56,6 +57,7 @@ class DiscPlanSeeder extends Seeder
                 'name' => 'Basic',
                 'slug' =>  Str::slug('free'),
                 'price' => 35.00,
+                'joing_free'=> 0,
                 'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
                 'showcase' => 1,
                 'features' => json_decode(json_encode(str_replace(array("\r", "\n", " "), "", '{
