@@ -26,7 +26,7 @@ class CreateRespondentDiscTestsTable extends Migration
             $table->timestamps();
 
             $table->foreign('respondent_id')->references('id')->on('respondents')->onDelete('cascade');
-            $table->foreign('respondent_disc_test_message_id')->references('id')->on('respondent_disc_messages')->onDelete('cascade');
+            $table->foreign('respondent_disc_test_message_id')->references('id')->on('respondent_disc_messages');
 
 
         });

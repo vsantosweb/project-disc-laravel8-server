@@ -18,13 +18,15 @@ class CreateRespondentDiscMessagesTable extends Migration
             $table->uuid('uuid')->unique();
             $table->unsignedBigInteger('customer_id');
             $table->string('name');
-            $table->string('subject');
-            $table->string('sender_name');
-            $table->text('content');
+            $table->string('subject')->nullable();
+            $table->string('sender_name')->nullable();
+            $table->text('content')->nullable();
+            $table->string('status')->default('draft')->comment('draft|sent|deleted');
             $table->text('report')->nullable();
             $table->text('bounce')->nullable();
+            $table->text('metadata')->nullable();
             $table->timestamps();
-
+            $table->softDeletes();
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
         });
     }

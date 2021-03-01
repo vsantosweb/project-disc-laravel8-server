@@ -10,14 +10,10 @@
 </html>
 
 <body style=" padding: 15px;">
-    <h4>Olá, {{ $respondent->name }}</h4>
-    <p>
-        Você foi convidado(a) a fazer uma avaliação DISC.
-        Seu relatório completo será impresso na tela após você responder as 28 afirmações.
-        Responda com bastante atenção!
-    </p>
+    <h4>Olá, {{ $respondentSession->respondent->name }}</h4>
+    {!! $discMessage->content !!}
     <hr />
 
-    <a href={{ $respondent->session->session_url }}> {{ $respondent->session->session_url }} </a>
+    <a href={{ $respondentSession->session_url }}> {{ $respondentSession->session_url }} </a>
 
 </body>

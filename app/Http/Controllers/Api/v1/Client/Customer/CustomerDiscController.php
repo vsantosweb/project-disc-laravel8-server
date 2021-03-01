@@ -8,16 +8,15 @@ use App\Models\Respondent\RespondentDiscTest;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class CustomerDiscController extends Controller
 {
     public function create(Request $request)
     {
 
-        $subscription =  auth()->user()->subscription;
-
-        if (!$subscription->checkCreditAvaiable()) {
-            return $this->outputJSON([], 'No credits Avaiable', false);
+        if (!auth()->user()->subscription->status) {
+            return $this->outputJSON([], 'subscription disabled', false);
         }
 
         $disc = new Disc;

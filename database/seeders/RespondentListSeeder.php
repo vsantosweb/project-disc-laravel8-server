@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Respondent\Respondent;
 use App\Models\Respondent\RespondentList;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +17,6 @@ class RespondentListSeeder extends Seeder
      */
     public function run()
     {
-        RespondentList::factory()->count(15)->create();
+        RespondentList::factory()->count(5)->create();
     }
 }

@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return response()->json('Server is running');
-});
+Route::get('/', function () { return response()->json([]); });
 
-Route::get('login', function(){
-    return response()->json('401 Unauthorized', 401);
-})->name('login');
+Route::get('login', function(){ return response()->json('401 Unauthorized', 401); })->name('login');
